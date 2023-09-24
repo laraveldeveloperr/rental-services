@@ -1,4 +1,6 @@
 <?php 
+use App\Models\Translations;
+use App\Models\Languages;
 
 if (! function_exists('move_file')) {
     function move_file($file, $type='avatar', $withWatermark = false)

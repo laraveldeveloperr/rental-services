@@ -12,6 +12,22 @@
     </a>
 </li>
 <li class="nav-item">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.brands') ? 'actived' : '' }}" href="{{ route(ADMIN . '.brands.index') }}">
+        <span class="icon-holder">
+            <i class="c-brown-500 ti-user"></i>
+        </span>
+        <span class="title">Brands</span>
+    </a>
+</li>
+<li class="nav-item">
+    <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.models') ? 'actived' : '' }}" href="{{ route(ADMIN . '.models.index') }}">
+        <span class="icon-holder">
+            <i class="c-brown-500 ti-user"></i>
+        </span>
+        <span class="title">Models</span>
+    </a>
+</li>
+<li class="nav-item">
     <a class="sidebar-link {{ Str::startsWith($route, ADMIN . '.users') ? 'actived' : '' }}" href="{{ route(ADMIN . '.users.index') }}">
         <span class="icon-holder">
             <i class="c-brown-500 ti-user"></i>

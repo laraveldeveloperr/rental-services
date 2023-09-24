@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
-
+use App\Models\Languages;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
             define('ADMIN', config('variables.APP_ADMIN', 'admin'));
         }
         require_once base_path('resources/macros/form.php');
+
+        $languages = Languages::where('status', 1)->get();
+        view()->share('languages', $languages);
+        
     }
 }

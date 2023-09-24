@@ -17,6 +17,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('migrate:fresh --seed')
                   ->everyThirtyMinutes();
+        
+        $schedule->command('delete:expired-discounts')->dailyAt('2:00');
     }
 
     /**

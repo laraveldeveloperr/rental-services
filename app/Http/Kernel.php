@@ -66,4 +66,8 @@ class Kernel extends HttpKernel
 
         'Role' => \App\Http\Middleware\Role::class,
     ];
+
+    protected $commands = [
+        \App\Console\Commands\DeleteExpiredDiscounts::class,
+    ];
 }
