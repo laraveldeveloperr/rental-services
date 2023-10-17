@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
 
 class users extends Seeder
 {
@@ -14,30 +15,15 @@ class users extends Seeder
      */
     public function run()
     {
-        $faker = \Faker\Factory::create();
-        
-        $data = [];
-        
-        for ($i = 1; $i <= 1 ; $i++) {
-            array_push($data, [
-                'name'     => 'hadji kouceyla',
-                'email'    => 'test@example.com',
+        $admin = User::create([
+                'name'     => 'Cavid Şıxıyev',
+                'email'    => 'chaparoglucavid@gmail.com',
                 'password' => bcrypt('123456'),
-                'role'     => 10,
-                'bio'      => $faker->realText(),
-            ]);
-        }
+                'user_role'     => 10,
+                'bio'      => "",
+        ]);
 
-        for ($i = 1; $i <= 10 ; $i++) {
-            array_push($data, [
-                'name'     => $faker->name(),
-                'email'    => $faker->email,
-                'password' => bcrypt('123456'),
-                'role'     => 0,
-                'bio'      => $faker->realText(),
-            ]);
-        }
-        
-        User::insert($data);
+        $role = Role::first();
+        $admin->assignRole($role);
     }
 }

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
+use Str;
 
 class UserController extends Controller
 {
@@ -15,9 +17,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $items = User::latest('updated_at')->get();
-
-        return view('admin.users.index', compact('items'));
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -27,7 +28,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create');
+        $roles = Role::all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -38,14 +40,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, User::rules());
+        $user = new User;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->bio = $request->bio;
+        $user->user_role = 10;
+        $user->role = $request->role;
+        // if ($request->file('avatar')) {
+        //     $user_avatar = $request->file('avatar');
+        //     $user_avatar->move(public_path('images/avatar'), $user_avatar->getClientOriginalName());
+        //     $user_avatar = $user_avatar->getClientOriginalName();
+        // }
+        // $user->avatar = $user_avatar;
+        $user->save();
+        $user->assignRole($request->role);
 
-        $data = $request->all();
-        $data['password'] = bcrypt(request('password'));
-
-        User::create($data);
-
-        return back()->withSuccess(trans('app.success_store'));
+        toast('Admin müvəffəqiyyətlə əlavə edildi', 'success');
+        return back();
     }
 
     /**
@@ -67,9 +79,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $item = User::findOrFail($id);
-
-        return view('admin.users.edit', compact('item'));
+        $user = User::findOrFail($id);
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -84,7 +96,6 @@ class UserController extends Controller
         $this->validate($request, User::rules(true, $id));
 
         $item = User::findOrFail($id);
-
         $data = $request->except('password');
 
         if (request('password')) {
@@ -92,7 +103,7 @@ class UserController extends Controller
         }
 
         $item->update($data);
-
+        $item->syncRoles($request->role);
         return redirect()->route(ADMIN . '.users.index')->withSuccess(trans('app.success_update'));
     }
 

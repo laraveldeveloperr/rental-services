@@ -15,6 +15,7 @@ class Blogs extends Model implements TranslatableContract
     protected $table = "blogs";
     protected $fillable = [
         'image', 
+        'viewed',
         'status'
     ];
     public $translatedAttributes = ['title','content', 'slug'];

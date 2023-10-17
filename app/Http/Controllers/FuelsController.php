@@ -38,12 +38,10 @@ class FuelsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Fuels::rules());
-        $fuels = new Fuels;
-        $fuels->name = $request->name;
-        $fuels->slug = Str::slug($request->name);
-        $fuels->status = $request->status;
-        $fuels->save();
+        $type = new Fuels;
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Yanacaq növü müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,12 +79,10 @@ class FuelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Fuels::rules());
-        $fuel = Fuels::findOrFail($id);
-        $fuel->name = $request->name;
-        $fuel->slug = Str::slug($request->name);
-        $fuel->status = $request->status;
-        $fuel->save();
+        $type = Fuels::findOrFail($id);
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Yanacaq növü məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();

@@ -8,7 +8,7 @@
                     <span>
                         <i class="mdi mdi-arrow-left"></i>
                     </span>    
-                    Dil
+                    {{ __('languages') }}
                 </a>
             </div>
         </h3>
@@ -18,32 +18,32 @@
 			@csrf
             @method("PUT")
           <div class="row mb-3">
-            <label for="name" class="col-sm-3 col-form-label">Dil</label>
+            <label for="name" class="col-sm-3 col-form-label">{{ __('language') }}</label>
             <div class="col-sm-9">
-              <input type="text" value="{{ $lang->name }}" class="form-control" name="name" id="name" placeholder="Dil daxil edin">
+              <input type="text" value="{{ $lang->name }}" class="form-control" name="name" id="name" placeholder="{{ __('enter_language') }}">
             </div>
           </div>
 
           <div class="row mb-3">
-            <label for="shortened" class="col-sm-3 col-form-label">Dil</label>
+            <label for="shortened" class="col-sm-3 col-form-label">{{ __('short_name') }}</label>
             <div class="col-sm-9">
-              <input type="text" value="{{ $lang->shortened }}" class="form-control" name="shortened" id="shortened" placeholder="Qısaldılmış adı daxil edin">
+              <input type="text" value="{{ $lang->shortened }}" class="form-control" name="shortened" id="shortened" placeholder="enter_shortened">
             </div>
           </div>
 
 		  <div class="row mb-3">
-            <label for="status" class="col-sm-3 col-form-label">Status</label>
+            <label for="status" class="col-sm-3 col-form-label">{{ __('status') }}</label>
             <div class="col-sm-9">
 			  <select name="status" class="js-example-basic-single form-select" id="status">
-				<option selected disabled>Seçin</option>
-				<option value="1" {{ $lang->status==1 ? 'selected' : ''}}>Aktiv</option>
-				<option value="0" {{ $lang->status==0 ? 'selected' : ''}}>Deaktiv</option>
+				<option selected disabled>{{ __('select') }}</option>
+				<option value="1" {{ $lang->status==1 ? 'selected' : ''}}>{{ __('active') }}</option>
+				<option value="0" {{ $lang->status==0 ? 'selected' : ''}}>{{ __('deactive') }}</option>
 			  </select>
             </div>
           </div>
 
 		 
-          <button type="submit" class="btn btn-primary me-2">Yadda saxla</button>
+          <button type="submit" class="btn btn-primary me-2">{{ __('update') }}</button>
         </form>
       </div>
     </div>

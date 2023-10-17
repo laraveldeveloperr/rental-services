@@ -37,10 +37,8 @@ class SiteFaqsController extends Controller
      */
     public function store(Request $request)
     {
-        $element = $this->validate($request,SiteFaqs::rules());
         $faq = new SiteFaqs;
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
+        $faq->fill($request->data);
         $faq->status = $request->status;
         $faq->save();
         toast('Sual-cavab müvəffəqiyyətlə əlavə edildi', 'success');
@@ -79,10 +77,8 @@ class SiteFaqsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $element = $this->validate($request,SiteFaqs::rules());
         $faq = SiteFaqs::findOrFail($id);
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
+        $faq->fill($request->data);
         $faq->status = $request->status;
         $faq->save();
         toast('Sual-cavab müvəffəqiyyətlə dəyişdirildi', 'success');

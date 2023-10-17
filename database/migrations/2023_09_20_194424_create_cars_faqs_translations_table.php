@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('cars_faqs_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
-            $table->string('question');
-            $table->text('answer');
+            $table->string('question')->nullable();
+            $table->text('answer')->nullable();
             $table->timestamps();
 
             $table->unique(['cars_faqs_id', 'locale']);

@@ -27,6 +27,8 @@ return new class extends Migration
             $table->string('phone');
             $table->text('special_request')->nullable();
             $table->double('price');
+            $table->double('discount');
+            $table->integer('discount_type')->nullable();
             $table->double('discounted_price');
             $table->integer('status')->default(0);
             $table->softDeletes();

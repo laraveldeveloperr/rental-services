@@ -24,6 +24,8 @@ class Brons extends Model
         'phone_number',
         'special_request',
         'price',
+        'discount',
+        'discount_type',
         'discounted_price',
         'status'
     ];

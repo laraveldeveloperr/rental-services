@@ -37,10 +37,8 @@ class CarsFaqsController extends Controller
      */
     public function store(Request $request)
     {
-        $element = $this->validate($request,CarsFaqs::rules());
         $faq = new CarsFaqs;
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
+        $faq->fill($request->data);
         $faq->status = $request->status;
         $faq->save();
         toast('Sual-cavab müvəffəqiyyətlə əlavə edildi', 'success');
@@ -79,13 +77,11 @@ class CarsFaqsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $element = $this->validate($request,CarsFaqs::rules());
         $faq = CarsFaqs::findOrFail($id);
-        $faq->question = $request->question;
-        $faq->answer = $request->answer;
+        $faq->fill($request->data);
         $faq->status = $request->status;
         $faq->save();
-        toast('Sual-cavab müvəffəqiyyətlə dəyişdirildi', 'success');
+        toast('Sual-cavab müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
     }
 

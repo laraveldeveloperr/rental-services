@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('image');
+            $table->integer('viewed')->default(0);
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

@@ -2,13 +2,13 @@
 @section('content')
 <div class="card">
 	<div class="card-header">
-        <h3>Rəy məlumatları
+        <h3>{{ __('comment_informations') }}
             <div class="float-end">
                 <a class="btn btn-danger btn-xs" href="{{ route(ADMIN.'.car-comments.index') }}">
                     <span>
                         <i class="mdi mdi-arrow-left"></i>
                     </span>    
-                    Rəylər
+                    {{ __('comments') }}
                 </a>
             </div>
         </h3>
@@ -17,13 +17,11 @@
         <form class="forms-sample" action="{{ route(ADMIN.'.car-comments.update', $comment->id) }}" method="POST" enctype="multipart/form-data">
 			  @csrf
           @method('PUT')
-
-           
           <div class="row mb-3">
-            <label for="cars_id" class="col-sm-3 col-form-label">Avtomobil</label>
+            <label for="cars_id" class="col-sm-3 col-form-label">{{ __('cars') }}</label>
             <div class="col-sm-9">
             <select name="cars_id" class="js-example-basic-single form-select" id="cars_id">
-              <option selected disabled>Seçin</option>
+              <option selected disabled>{{ __('select') }}</option>
               @foreach ($cars as $item)
                 <option value="{{ $item->id }}" {{ $comment->cars_id==$item->id ? 'selected' : '' }}>{{ $item->licence_plate }}</option>
               @endforeach
@@ -32,48 +30,48 @@
           </div>
 
           <div class="row mb-3">
-            <label for="who_shared" class="col-sm-3 col-form-label">Paylaşan</label>
+            <label for="who_shared" class="col-sm-3 col-form-label">{{ __('shared') }}</label>
             <div class="col-sm-9">
             <select name="who_shared" class="js-example-basic-single form-select" id="who_shared">
-              <option selected disabled>Seçin</option>
-              <option value="1" {{ $comment->who_shared==1 ? 'selected' : '' }}>Admin</option>
-              <option value="0" {{ $comment->who_shared==0 ? 'selected' : '' }}>İstifadəçi</option>
+              <option selected disabled>{{ __('select') }}</option>
+              <option value="1" {{ $comment->who_shared==1 ? 'selected' : '' }}>{{ __('admin') }}</option>
+              <option value="0" {{ $comment->who_shared==0 ? 'selected' : '' }}>{{ __('user') }}</option>
             </select>
             </div>
           </div>
           <div class="row mb-3">
-            <label for="name_surname" class="col-sm-3 col-form-label">Ad Soyad</label>
+            <label for="name_surname" class="col-sm-3 col-form-label">{{ __('name_surname') }}</label>
             <div class="col-sm-9">
               <input type="text" class="form-control" name="name_surname" value="{{ $comment->name_surname }}" id="name_surname">
             </div>
           </div>
           
           <div class="row mb-3">
-            <label for="comment" class="col-sm-3 col-form-label">Rəy</label>
+            <label for="comment" class="col-sm-3 col-form-label">{{ __('comment') }}</label>
             <div class="col-sm-9">
               <textarea id="summernote" name="comment" height="300">{{ $comment->comment }}</textarea>
             </div>
           </div>
           
           <div class="row mb-3">
-            <label for="comment_date" class="col-sm-3 col-form-label">Tarix</label>
+            <label for="comment_date" class="col-sm-3 col-form-label">{{ __('date') }}</label>
             <div class="col-sm-9">
               <input type="date" class="form-control" value="{{ $comment->comment_date }}" name="comment_date" id="comment_date">
             </div>
           </div>
 
           <div class="row mb-3">
-            <label for="status" class="col-sm-3 col-form-label">Status</label>
+            <label for="status" class="col-sm-3 col-form-label">{{ __('status') }}</label>
             <div class="col-sm-9">
             <select name="status" class="js-example-basic-single form-select" id="status">
-              <option selected disabled>Seçin</option>
-              <option value="1" {{ $comment->status==1 ? 'selected' : '' }}>Aktiv</option>
-              <option value="0" {{ $comment->status==0 ? 'selected' : '' }}>Deaktiv</option>
+              <option selected disabled>{{ __('select') }}</option>
+              <option value="1" {{ $comment->status==1 ? 'selected' : '' }}>{{ __('active') }}</option>
+              <option value="0" {{ $comment->status==0 ? 'selected' : '' }}>{{ __('deactive') }}</option>
             </select>
             </div>
           </div>
 		 
-          <button type="submit" class="btn btn-primary me-2">Yadda saxla</button>
+          <button type="submit" class="btn btn-primary me-2">{{ __('update') }}</button>
         </form>
       </div>
     </div>

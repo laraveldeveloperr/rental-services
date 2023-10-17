@@ -38,12 +38,10 @@ class TransmissionsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Transmissions::rules());
-        $items = new Transmissions;
-        $items->name = $request->name;
-        $items->slug = Str::slug($request->name);
-        $items->status = $request->status;
-        $items->save();
+        $type = new Transmissions;
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Sürət qutusu müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,12 +79,10 @@ class TransmissionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Transmissions::rules());
-        $item = Transmissions::findOrFail($id);
-        $item->name = $request->name;
-        $item->slug = Str::slug($request->name);
-        $item->status = $request->status;
-        $item->save();
+        $type = Transmissions::findOrFail($id);
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Sürət qutusu məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();

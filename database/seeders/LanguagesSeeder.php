@@ -20,16 +20,6 @@ class LanguagesSeeder extends Seeder
                 'name'=>'Azərbaycan dili',
                 'shortened'=>'az',
                 'status'=>1
-            ],
-            [
-                'name'=>'İngilis dili',
-                'shortened'=>'en',
-                'status'=>1
-            ],
-            [
-                'name'=>'Rus dili',
-                'shortened'=>'ru',
-                'status'=>1
             ]
         ];
 

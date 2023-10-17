@@ -38,17 +38,15 @@ class BlogsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Blogs::rules());
         $blog = new Blogs;
-        $blog->title = $request->title;
-        $blog->content = $request->content;
+        $blog->fill($request->data);
         if ($request->file('image')) {
             $blog_image = $request->file('image');
-            $blog_image->move(public_path('images/blogs'), $blog_image->getClientOriginalName());
-            $blog_image = $blog_image->getClientOriginalName();
+            if ($blog_image->isValid()) {
+                $imagePath = $blog_image->store('images/blogs', 'public'); // Store the image in the 'public' disk.
+                $blog->image = $imagePath;
+            }
         }
-        $blog->image = $blog_image;
-        $blog->slug = Str::slug($request->title);
         $blog->status = $request->status;
         $blog->save();
 
@@ -89,10 +87,8 @@ class BlogsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Blogs::rules());
         $blog = Blogs::findOrFail($id);
-        $blog->title = $request->title;
-        $blog->content = $request->content;
+        $blog->fill($request->data);
         if ($request->file('image')) {
             $oldimage = $blog->image;
             $blog_image = $request->file('image');
@@ -103,11 +99,10 @@ class BlogsController extends Controller
                 unlink(public_path('images/blogs/' . $oldimage));
             }
         }
-        $blog->slug = Str::slug($request->title);
         $blog->status = $request->status;
         $blog->save();
 
-        toast('Bloq müvəffəqiyyətlə əlavə edildi', 'success');
+        toast('Bloq məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();
     }
 

@@ -11,7 +11,7 @@ class Translations extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'translations';
-    protected $fillable = ['languages_id', 'key', 'value'];
+    protected $fillable = ['key'];
 
     /*
     |------------------------------------------------------------------------------------
@@ -25,10 +25,6 @@ class Translations extends Model
     |------------------------------------------------------------------------------------
     */
 
-    public function languages()
-    {
-        return $this->belongsTo(Languages::class);
-    }
 
     /*
     |------------------------------------------------------------------------------------

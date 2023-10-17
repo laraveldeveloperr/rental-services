@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Blogs;
+use App\Models\GeneralSettings;
+use App\Models\PageDesigns;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -33,7 +36,10 @@ class AppServiceProvider extends ServiceProvider
         require_once base_path('resources/macros/form.php');
 
         $languages = Languages::where('status', 1)->get();
-        view()->share('languages', $languages);
+        $general_settings = GeneralSettings::first();
+        $page_design = PageDesigns::first();
+        $blogs = Blogs::orderBy('id', 'ASC')->get();
+        view()->share(['languages'=>$languages, 'general_settings'=>$general_settings, 'page_design'=>$page_design, 'blogs'=>$blogs]);
         
     }
 }

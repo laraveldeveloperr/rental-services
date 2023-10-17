@@ -10,7 +10,7 @@
             <div class="email-list">
             <div>
               <div class="d-flex align-items-center p-3 border-bottom tx-16">
-              <h4 class="me-1 text-danger">Qaralamada olan mesaj</h4>
+              <h4 class="me-1 text-danger">{{ __('draft_message') }}</h4>
               </div>
             </div>
             <form action="{{ route(ADMIN.'.messages.update', $message->id) }}" method="POST">
@@ -19,7 +19,7 @@
             <div class="p-3 pb-0">
                 <div class="subject">
                     <div class="row mb-3">
-                    <label class="col-md-2 col-form-label">Kimə</label>
+                    <label class="col-md-2 col-form-label">{{ __('to') }}</label>
                     <div class="col-md-10">
                         <input class="form-control" value="{{ $message->repicient }}" name="repicient" type="text">
                     </div>
@@ -27,7 +27,7 @@
                 </div>
                 <div class="subject">
                     <div class="row mb-3">
-                    <label class="col-md-2 col-form-label">Başlıq</label>
+                    <label class="col-md-2 col-form-label">{{ __('subject') }}</label>
                     <div class="col-md-10">
                         <input class="form-control" name="subject" value="{{ $message->subject }}" type="text">
                     </div>
@@ -42,9 +42,9 @@
               </div>
               <div>
                 <div class="col-md-12">
-                  <button class="btn btn-primary me-1 mb-1" type="submit" name="send" value="1"> Göndər</button>
-                  <button class="btn btn-secondary me-1 mb-1" type="submit" name="send" value="0"> Qaralamada saxla</button>
-                  <button class="btn btn-danger me-1 mb-1 cancel-email" type="button"> Ləğv et</button>
+                  <button class="btn btn-primary me-1 mb-1" type="submit" name="send" value="1"> {{ __('send_message') }}</button>
+                  <button class="btn btn-secondary me-1 mb-1" type="submit" name="send" value="0"> {{ __('save_to_draft') }}</button>
+                  <button class="btn btn-danger me-1 mb-1 cancel-email" type="button"> {{ __('cancel') }}</button>
                 </div>
               </div>
             </div> 

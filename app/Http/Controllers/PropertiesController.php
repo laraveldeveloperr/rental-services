@@ -38,12 +38,10 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Properties::rules());
-        $properties = new Properties;
-        $properties->name = $request->name;
-        $properties->slug = Str::slug($request->name);
-        $properties->status = $request->status;
-        $properties->save();
+        $property = new Properties;
+        $property->fill($request->data);
+        $property->status = $request->status;
+        $property->save();
 
         toast('Maşın özəllikləri müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,12 +79,11 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Properties::rules());
         $property = Properties::findOrFail($id);
-        $property->name = $request->name;
-        $property->slug = Str::slug($request->name);
+        $property->fill($request->data);
         $property->status = $request->status;
         $property->save();
+
 
         toast('Maşın özəllikləri məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();

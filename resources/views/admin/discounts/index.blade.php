@@ -2,13 +2,13 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-        <h3>Endirimlər
+        <h3>{{ __('discounts') }}
             <div class="float-end">
                 <a class="btn btn-success btn-xs" href="{{ route(ADMIN.'.discounts.create') }}">
                     <span>
                         <i class="mdi mdi-plus"></i>
                     </span>    
-                    Yeni endirim
+                    {{ __('new') }}
                 </a>
             </div>
         </h3>
@@ -19,15 +19,15 @@
             <thead>
               <tr>
                 <th>№</th>
-                <th>Marka</th>
-                <th>Model</th>
-                <th>Avtomobil</th>
-                <th>Tip</th>
-                <th>Məbləğ/Faiz</th>
-                <th>Başlanğıc tarixi</th>
-                <th>Bitiş tarixi</th>
-                <th>Status</th>
-                <th>Əməliyyatlar</th>
+                <th>{{ __('brand') }}</th>
+                <th>{{ __('model') }}</th>
+                <th>{{ __('car') }}</th>
+                <th>{{ __('type') }}</th>
+                <th>{{ __('price') }}/{{ __('percentage') }}</th>
+                <th>{{ __('start_date') }}</th>
+                <th>{{ __('end_date') }}</th>
+                <th>{{ __('status') }}</th>
+                <th>{{ __('operations') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                 <td>
                     @if (is_null($type->models))
                       <small class="text-danger">
-                      Tətbiq edilməyib
+                      {{ __('not_applied') }}
                       </small>
                     @else
                      <strong> {{ $type->models->name }} </strong>                      
@@ -51,14 +51,14 @@
                 <td>
                     @if (is_null($type->cars))
                     <small class="text-danger">
-                      Tətbiq edilməyib
+                      {{ __('not_applied') }}
                     </small>
                     @else
                       <strong> {{$type->cars->licence_plate}} </strong>                     
                     @endif
                 </td>
                 <td>
-                    {{ $type->type==1 ? 'Faizlə' : 'Manatla' }}
+                    {{ $type->type==1 ? __('percentage') : __('flat') }}
                 </td>
                 <td>
                     <strong class="text-success">
@@ -73,13 +73,13 @@
                 </td>
                 <td>
                     <button class="btn btn-outline-{{ $type->status==1 ? 'success' : 'danger' }} btn-xs">
-                    {{ $type->status==1 ? 'Aktiv' : 'Deaktiv' }}
+                    {{ $type->status==1 ? __('active') : __('deactive') }}
                     </button>
                 </td>
                 <td>
                 <ul class="list-inline">
                             <li class="list-inline-item">
-                            <a class="dropdown-item d-flex align-items-center" href="{{ route(ADMIN.'.discounts.edit', $type->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm me-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg> <span class="">Düzəliş et</span></a>
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route(ADMIN.'.discounts.edit', $type->id) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2 icon-sm me-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg> <span class="">{{ __('edit') }}</span></a>
                             </li>
                             <li class="list-inline-item">
                                 {!! Form::open([
@@ -89,7 +89,7 @@
                                 ])
                                 !!}
 
-                                <button class="dropdown-item d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash icon-sm me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span class="">Sil</span></button>
+                                <button class="dropdown-item d-flex align-items-center"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash icon-sm me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> <span class="">{{ __('delete') }}</span></button>
                                 {!! Form::close() !!}
                             </li>
                         </ul>

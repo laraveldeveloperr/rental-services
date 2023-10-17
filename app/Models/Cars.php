@@ -135,6 +135,11 @@ class Cars extends Model implements TranslatableContract
         return $this->hasMany(CarComments::class);
     }
 
+    public function galleries()
+    {
+        return $this->hasMany(CarsGallery::class);
+    }
+
     /*
     |------------------------------------------------------------------------------------
     | Scopes

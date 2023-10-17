@@ -8,10 +8,15 @@
               <div class="input-group-text">
                 <i data-feather="search"></i>
               </div>
-              <input type="text" class="form-control" id="navbarForm" placeholder="Axtarın...">
+              <input type="text" class="form-control" id="navbarForm" placeholder="{{ __('search') }}">
             </div>
           </form>
           <ul class="navbar-nav">
+          <li class="nav-item ">
+              <a class="nav-link" href="{{ route('home') }}" target="_blank">
+                <span class="ms-1 me-1 d-none d-md-inline-block">{{ __('visit_site') }}</span>
+              </a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -44,13 +49,13 @@
                   <li class="dropdown-item py-2">
                     <a href="general/profile.html" class="text-body ms-0">
                       <i class="me-2 icon-md" data-feather="user"></i>
-                      <span>Hesab</span>
+                      <span>{{ __('account') }}</span>
                     </a>
                   </li>
                   <li class="dropdown-item py-2">
                     <a href="/logout" class="text-body ms-0">
                       <i class="me-2 icon-md" data-feather="log-out"></i>
-                      <span>Çıxış</span>
+                      <span>{{ __('logout') }}</span>
                     </a>
                   </li>
                 </ul>

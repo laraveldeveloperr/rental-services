@@ -17,8 +17,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('general_settings_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
-            $table->string('address');
-            $table->text('about_text');
+            $table->string('address')->nullable();
+            $table->string('meta_title')->nullable();
+            $table->text('meta_keywords')->nullable();
+            $table->text('about_text')->nullable();
+            $table->text('privacy_policy')->nullable();
+            $table->text('meta_description')->nullable();
             $table->timestamps();
 
             $table->unique(['general_settings_id', 'locale']);

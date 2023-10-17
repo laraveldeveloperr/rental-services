@@ -2,13 +2,13 @@
 @section('content')
     <div class="card">
 	<div class="card-header">
-        <h3>Yeni endirim
+        <h3>{{ __('new') }}
             <div class="float-end">
                 <a class="btn btn-danger btn-xs" href="{{ route(ADMIN.'.discounts.index') }}">
                     <span>
                         <i class="mdi mdi-arrow-left"></i>
                     </span>    
-                    Endirimlər
+                    {{ __('discounts') }}
                 </a>
             </div>
         </h3>
@@ -18,10 +18,10 @@
 			@csrf
 
           <div class="row mb-3" id="brand-section">
-            <label for="brands_id" class="col-sm-2 col-form-label">Marka</label>
+            <label for="brands_id" class="col-sm-2 col-form-label">{{ __('brands') }}</label>
             <div class="col-sm-10">
             <select name="brands_id" class="js-example-basic-single form-select brand-content" id="brands_id">
-              <option selected disabled>Seçin</option>
+              <option selected disabled>{{ __('select') }}</option>
               @foreach ($brands as $brand)
                 <option value="{{ $brand->id }}" {{ old('brands_id')==$brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
               @endforeach
@@ -30,10 +30,10 @@
           </div>
 
           <div class="row mb-3" id="model-section">
-            <label for="models_id" class="col-sm-2 col-form-label">Model</label>
+            <label for="models_id" class="col-sm-2 col-form-label">{{ __('models') }}</label>
             <div class="col-sm-10">
             <select name="models_id" class="js-example-basic-single form-select model-content" id="models_id">
-              <option selected disabled>Seçin</option>
+              <option selected disabled>{{ __('select') }}</option>
               @foreach ($models as $model)
                 <option value="{{ $model->id }}" {{ old('models_id')==$model->id ? 'selected' : '' }}>{{ $model->name }}</option>
               @endforeach
@@ -42,10 +42,10 @@
           </div>
 
           <div class="row mb-3" id="car-section">
-            <label for="models_id" class="col-sm-2 col-form-label">Avtomobil</label>
+            <label for="models_id" class="col-sm-2 col-form-label">{{ __('cars') }}</label>
             <div class="col-sm-10">
             <select name="cars_id" class="js-example-basic-single form-select car-content" id="cars_id">
-              <option selected disabled>Seçin</option>
+              <option selected disabled>{{ __('select') }}</option>
               @foreach ($cars as $car)
                 <option value="{{ $car->id }}" {{ old('cars_id')==$car->id ? 'selected' : '' }}>{{ $car->brands->name }} {{ $car->models->name }} {{ $car->name }}</option>
               @endforeach
@@ -54,21 +54,21 @@
           </div>
 
           <div class="row mb-3" id="car-section">
-            <label for="type" class="col-sm-2 col-form-label">Endirim</label>
+            <label for="type" class="col-sm-2 col-form-label">{{ __('discount') }}</label>
             <div class="col-sm-5">
               <select name="type" class="js-example-basic-single form-select discount-type" id="type">
-                <option selected disabled>Seçin</option>
-                <option value="1">Faizlə</option>
-                <option value="0">Manatla</option>
+                <option selected disabled>{{ __('select') }}</option>
+                <option value="1">{{ __('percentage') }}</option>
+                <option value="0">{{ __('flat') }}</option>
               </select>
             </div>
             <div class="col-sm-5">
-              <input type="number" name="discount" class="form-control" id="discount" placeholder="Endirimi daxil edin">
+              <input type="number" name="discount" class="form-control" id="discount" placeholder="{{ __('enter_discount') }}">
             </div>
           </div>
 
           <div class="row mb-3" id="car-section">
-            <label for="type" class="col-sm-2 col-form-label">Tarix aralığı</label>
+            <label for="type" class="col-sm-2 col-form-label">{{ __('date') }}</label>
               <div class="col-md-5">
                 <input type="date" class="form-control" name="start_date" id="start_date">
               </div>
@@ -78,18 +78,18 @@
           </div>
 		      
           <div class="row mb-3">
-            <label for="status" class="col-sm-2 col-form-label">Status</label>
+            <label for="status" class="col-sm-2 col-form-label">{{ __('status') }}</label>
             <div class="col-sm-10">
               <select name="status" class="js-example-basic-single form-select" id="status">
-                <option selected disabled>Seçin</option>
-                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Aktiv</option>
-                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>Deaktiv</option>
+                <option selected disabled>{{ __('select') }}</option>
+                <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>{{ __('active') }}</option>
+                <option value="0" {{ old('status') == 0 ? 'selected' : '' }}>{{ __('deactive') }}</option>
               </select>
             </div>
           </div>
 
 		 
-          <button type="submit" class="btn btn-primary me-2">Daxil et</button>
+          <button type="submit" class="btn btn-primary me-2">{{ __('save') }}</button>
         </form>
       </div>
     </div>

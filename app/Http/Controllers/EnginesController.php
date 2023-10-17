@@ -38,12 +38,10 @@ class EnginesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Engines::rules());
-        $engines = new Engines;
-        $engines->name = $request->name;
-        $engines->slug = Str::slug($request->name);
-        $engines->status = $request->status;
-        $engines->save();
+        $engine = new Engines;
+        $engine->fill($request->data);
+        $engine->status = $request->status;
+        $engine->save();
 
         toast('Mator həcmi müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,13 +79,11 @@ class EnginesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Engines::rules());
-        $fuel = Engines::findOrFail($id);
-        $fuel->name = $request->name;
-        $fuel->slug = Str::slug($request->name);
-        $fuel->status = $request->status;
-        $fuel->save();
-
+        $type = Engines::findOrFail($id);
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
+        
         toast('Mator həcmi məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();
     }

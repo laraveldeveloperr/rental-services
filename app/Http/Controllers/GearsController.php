@@ -38,12 +38,10 @@ class GearsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Gears::rules());
-        $gears = new Gears;
-        $gears->name = $request->name;
-        $gears->slug = Str::slug($request->name);
-        $gears->status = $request->status;
-        $gears->save();
+        $type = new Gears;
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Ötürücü müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,12 +79,10 @@ class GearsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Gears::rules());
-        $gear = Gears::findOrFail($id);
-        $gear->name = $request->name;
-        $gear->slug = Str::slug($request->name);
-        $gear->status = $request->status;
-        $gear->save();
+        $type = Gears::findOrFail($id);
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Ötürücü məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();

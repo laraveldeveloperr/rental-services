@@ -7,7 +7,7 @@ return [
         1 => 'Yes',
     ],
 
-    'role' => [
+    'user_role' => [
         0 => 'User',
         10 => 'Admin',
     ],

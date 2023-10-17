@@ -18,6 +18,19 @@ class GeneralSettingsController extends Controller
     {
 
         $general_settings = GeneralSettings::first();
+        
+        $data = $request->data;
+        
+        $data_updated = [];
+        
+        foreach ($request->data as $key => $item) {
+            $encodedMetaKeywords = json_encode($item['meta_keywords']);
+            $item['meta_keywords'] = $encodedMetaKeywords; // Replace the original "meta_keywords" with the encoded value
+            $data_updated[$key] = $item;
+        }
+
+        $general_settings->fill($data_updated);
+
         if ($request->file('logo')) {
             $logo = $request->file('logo');
             $logo->move(public_path('images'), $logo->getClientOriginalName());
@@ -26,19 +39,13 @@ class GeneralSettingsController extends Controller
         }
         $general_settings->numbers = json_encode($request->numbers) ? json_encode($request->numbers) : NULL; 
         $general_settings->emails = json_encode($request->emails) ? json_encode($request->emails) : NULL; 
-        $general_settings->address = $request->address ? $request->address : NULL;
-        $general_settings->about_text = $request->about_text ? $request->about_text : NULL;
         $general_settings->social_networks = json_encode($request->social_networks) ? json_encode($request->social_networks) : NULL;
-        $general_settings->meta_title = $request->meta_title ? $request->meta_title : NULL;
-        $general_settings->meta_description = $request->meta_description ? $request->meta_description : NULL;
-        $general_settings->meta_keywords = $request->meta_keywords ? $request->meta_keywords : NULL;
         $general_settings->repair_mode = $request->repair_mode;
+
+
         $general_settings->save();
 
-        toast('Ümumi tənzimləmələr müvəffəqiyyətlə tıyin edildi', 'success');
+        toast('Ümumi tənzimləmələr müvəffəqiyyətlə təyin edildi', 'success');
         return back();
-         
-
-
     }
 }

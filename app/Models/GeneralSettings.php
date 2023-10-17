@@ -16,13 +16,10 @@ class GeneralSettings extends Model implements TranslatableContract
         'numbers',
         'emails',
         'social_networks',
-        'meta_title',
-        'meta_description',
-        'meta_keywords',
         'repair_mode'
     ];
 
-    public $translatedAttributes = ['address', 'about_text'];
+    public $translatedAttributes = ['address', 'about_text', 'privacy_policy' ,'meta_title', 'meta_keywords', 'meta_description'];
 
     /*
     |------------------------------------------------------------------------------------

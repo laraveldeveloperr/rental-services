@@ -38,11 +38,10 @@ class BanTypesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,BanTypes::rules());
-        $types = new BanTypes;
-        $types->name = $request->name;
-        $types->status = $request->status;
-        $types->save();
+        $type = new BanTypes;
+        $type->fill($request->data);
+        $type->status = $request->status;
+        $type->save();
 
         toast('Ban növü müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -80,9 +79,8 @@ class BanTypesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,BanTypes::rules());
         $type = BanTypes::findOrFail($id);
-        $type->name = $request->name;
+        $type->fill($request->data);
         $type->status = $request->status;
         $type->save();
 

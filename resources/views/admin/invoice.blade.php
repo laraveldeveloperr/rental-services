@@ -1,41 +1,54 @@
-<!DOCTYPE html>
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Responsive Laravel Admin Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="NobleUI">
-	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, laravel, theme, front-end, ui kit, web">
-  <title>{{ config('app.name') }}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com/">
-  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
-  <meta name="_token" content="MtfPUaaOgWeSJ65M5nuNpIwHHEIQkO4fSYEaLxvw">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link href="{{ asset('css/app.css')}}" rel="stylesheet" />
-  <link href="{{ asset('css/new.css')}}" rel="stylesheet" />
-  </head>
-<html> 
-  <body>
-    <script src="{{ asset('assets/js/spinner.js')}}"></script>
-    <div class="main-wrapper" id="app"> 
-      
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Document</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+    .container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #000;
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #333;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
   <div class="col-md-12 container">
     <div class="card">
-      <div class="card-body">
-        <div class="container-fluid d-flex justify-content-between">
-          <div class="col-lg-3 ps-0">
-            <a href="#" class="noble-ui-logo d-block mt-3">Noble<span>UI</span></a>                 
-            <p class="mt-1 mb-1"><b>NobleUI Themes</b></p>
-            <p>108,<br> Great Russell St,<br>London, WC1B 3NA.</p>
-            <h5 class="mt-5 mb-2 text-muted">Invoice to :</h5>
-            <p>Joseph&nbsp;E&nbsp;Carr,<br> 102, 102  Crown Street,<br> London, W3 3PR.</p>
-          </div>
+    <div class="container-fluid d-flex justify-content-between">
           <div class="col-lg-3 pe-0">
-            <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">Faktura</h4>
+            <h4 class="fw-bold text-uppercase text-end mt-4 mb-2">{{  __('invoice') }}</h4>
             <h6 class="text-end mb-5 pb-4">{{ $bron->bron_number }}</h6>
-            <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">Başlanğıc tarixi :</span> {{ $bron->pick_up }}</h6>
-            <h6 class="text-end fw-normal"><span class="text-muted">Bitiş tarixi :</span>{{ $bron->drop_off }}</h6>
+            <p class="text-end">{{ $bron->name }} {{ $bron->surname }}</p>
+            <h6 class="mb-0 mt-3 text-end fw-normal mb-2"><span class="text-muted">{{  __('start_date') }} :</span> {{ $bron->pick_up }}</h6>
+            <h6 class="text-end fw-normal"><span class="text-muted">{{  __('end_date') }} :</span>{{ $bron->drop_off }}</h6>
           </div>
         </div>
         <div class="container-fluid mt-5 d-flex justify-content-center w-100">
@@ -44,12 +57,12 @@
                 <thead>
                   <tr>
                       <th>#</th>
-                      <th>Avtomobil</th>
-                      <th class="text-end">Dövlət qeydiyyat nişanı</th>
-                      <th class="text-end">Qiymət (1 gün üçün)</th>
-                      <th class="text-end">Gün</th>
-                      <th class="text-end">Toplam qiymət</th>
-                      <th class="text-end">Endirimli qiymət</th>
+                      <th>{{  __('car') }}</th>
+                      <th class="text-end">{{  __('licence_plate') }}</th>
+                      <th class="text-end">{{  __('price') }} ({{  __('for_one_day') }})</th>
+                      <th class="text-end">{{  __('day') }}</th>
+                      <th class="text-end">{{  __('price_sum') }}</th>
+                      <th class="text-end">{{  __('discounted_price') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,15 +70,15 @@
                     <td class="text-start">1</td>
                     <td class="text-start">{{ $bron->brands->name }} {{ $bron->models->name }}</td>
                     <td>{{ $bron->cars->licence_plate }}</td>
-                    <td>{{ $bron->cars->day_price }} ₼</td>
+                    <td>{{ $bron->cars->day_price }} AZN</td>
                     <td>
                         {{ $gunFarki }}
                     </td>
                     <td>
-                        {{ $gunFarki*$bron->cars->day_price }} ₼
+                        {{ $bron->price }} AZN
                     </td>
                     <td>
-                        {{ $bron->discounted_price }} ₼
+                        {{ $bron->discounted_price }} AZN
                     </td>
                   </tr>
                 </tbody>
@@ -79,20 +92,25 @@
                   <table class="table">
                       <tbody>
                           <tr>
-                            <td class="text-bold-800">Cəmi məbləğ</td>
-                            <td class="text-bold-800 text-end">{{ $bron->price }} ₼</td>
+                            <td class="text-bold-800">{{ __('total_amount') }}</td>
+                            <td class="text-bold-800 text-end">{{ $bron->price }} AZN</td>
                           </tr>
                           <tr>
-                            <td class="text-bold-800">Endirim faizi</td>
-                            <td class="text-bold-800 text-end">{{ $discount }} %</td>
+                              @if($bron->type==1)
+                              <td class="text-bold-800">{{ __('discount_percentage') }}</td>
+                              <td class="text-bold-800 text-end">{{ $bron->discount }} %</td>
+                              @else
+                              <td class="text-bold-800">{{ __('discount_amount') }}</td>
+                              <td class="text-bold-800 text-end">{{ $bron->discount }} AZN</td>
+                              @endif
                           </tr>
                         <tr>
-                          <td>ƏDV</td>
-                          <td class="text-end">0 ₼</td>
+                          <td>{{ __('tax') }}</td>
+                          <td class="text-end">0 AZN</td>
                         </tr>
                         <tr class="bg-light">
-                          <td class="text-bold-800">Ödəniləcək məbləğ</td>
-                          <td class="text-bold-800 text-end">{{ $bron->discounted_price }} ₼</td>
+                          <td class="text-bold-800">{{ __('amount_to_be_paid') }}</td>
+                          <td class="text-bold-800 text-end">{{ $bron->discounted_price }} AZN</td>
                         </tr>
                       </tbody>
                   </table>
@@ -100,12 +118,9 @@
             </div>
           </div>
         </div>
-        <div class="container-fluid w-100">
-          <a href="javascript:;" class="btn btn-outline-primary float-end mt-4"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-printer me-2 icon-md"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>Endir</a>
-        </div>
-      </div>
     </div>
   </div>
-    </div>
-  </body>
+
+</body>
+
 </html>

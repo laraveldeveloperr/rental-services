@@ -7,6 +7,7 @@ use App\Models\Brands;
 use App\Models\Models;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Session;
 
 class ModelsController extends Controller
 {
@@ -49,10 +50,8 @@ class ModelsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Models::rules());
         $model = new Models;
-        $model->name = $request->name;
-        $model->slug = Str::slug($request->name);
+        $model->fill($request->data);
         $model->brands_id = $request->brands_id;
         $model->status = $request->status;
         $model->save();
@@ -94,14 +93,11 @@ class ModelsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Models::rules());
-        $model = Models::findOrFail($id);
-        $model->name = $request->name;
-        $model->slug = Str::slug($request->name);
-        $model->brands_id = $request->brands_id;
-        $model->status = $request->status;
-        $model->save();
-
+        $models = Models::findOrFail($id);
+        $models->fill($request->data);
+        $models->brands_id = $request->brands_id;
+        $models->status = $request->status;
+        $models->save();
         toast('Model məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();
     }

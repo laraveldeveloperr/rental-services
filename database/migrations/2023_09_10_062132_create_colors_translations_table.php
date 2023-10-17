@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('colors_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->string('locale')->index();
-            $table->string('name');
-            $table->string('slug');
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
 
             $table->unique(['colors_id', 'locale']);

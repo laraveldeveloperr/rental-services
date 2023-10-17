@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Messages;
 use Illuminate\Http\Request;
 use App\Models\Brons;
 use DB;
 use Carbon\Carbon;
+use Session;
 
 class DashboardController extends Controller
 {
@@ -81,6 +83,10 @@ class DashboardController extends Controller
 
             $last7Days = $currentDate->subDays(7);
             $bron_count_last_7_days = Brons::where('created_at', '>=', $last7Days)->count();
+
+            //mesajlar
+            $messages = Messages::where('sent', 1)->take(5);
+
             return view('admin.dashboard.index', compact(
                 'datasets_week', 
                 'labels_week',
@@ -88,7 +94,8 @@ class DashboardController extends Controller
                 'labels_month', 
                 'bron_count', 
                 'bron_count_last_30_days', 
-                'bron_count_last_7_days'
+                'bron_count_last_7_days',
+                'messages'
                 )
             );
     }
@@ -96,8 +103,19 @@ class DashboardController extends Controller
 
     public function set_locale($shortened)
     {
-        app()->setLocale($shortened);
+        $filePath = config_path('app.php');
+        $newLocale = is_null($shortened) ? 'az' : $shortened; 
+
+        $fileContent = file_get_contents($filePath);
+
+        $fileContent = preg_replace(
+            "/'locale' => '.*'/",
+            "'locale' => '$newLocale'",
+            $fileContent
+        );
+        file_put_contents($filePath, $fileContent);
+        Session::put('language', $shortened);
         toast('Sistem dili müvəffəqiyyətlə dəyişdirildi.', "success");
-        return redirect('/admin');
+        return back();
     }
 }

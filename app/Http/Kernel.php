@@ -64,7 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'Role' => \App\Http\Middleware\Role::class,
+        'User_role' => \App\Http\Middleware\User_role::class,
+        'setLanguage' => \App\Http\Middleware\SetLanguage::class,
     ];
 
     protected $commands = [

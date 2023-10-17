@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Brons;
 use Carbon\Carbon;
 use PDF;
+use Mail;
 
 class BronsController extends Controller
 {
@@ -38,7 +39,39 @@ class BronsController extends Controller
         $bron->status = $request->status;
         $bron->save();
 
-        //burada hem istifadeciye hem de admine mesaj getmelidir
+        $to_email = $bron->email.
+        $general_settings = GeneralSettings::first();
+        $admin_email = json_decode($general_settings->emails, true)[0];
+        $admin_number = json_decode($general_settings->numbers, true)[0];
+        
+        $data = [
+            'bron_number'               =>        $bron->bron_number,
+            'brands_id'                 =>        $bron->brands_id,
+            'models_id'                 =>        $bron->models_id,
+            'cars_id'                   =>        $bron->cars_id,
+            'price'                     =>        $bron->price,
+            'discount_type'             =>        $bron->discount_type,
+            'discount'                  =>        $bron->discount,
+            'discounted_price'          =>        $bron->discounted_price,
+            'name'                      =>        $bron->name,
+            'surname'                   =>        $bron->surname,
+            'phone'                     =>        $bron->phone,
+            'special_request'           =>        $bron->special_request,
+            'email'                     =>        $bron->email,
+            'start_date'                =>        $bron->pick_up,
+            'end_date'                  =>        $bron->drop_off,
+            'created_at'                =>        $bron->created_at->format('d.m.Y')
+        ];
+        
+        
+        $title = "Bron qəbul edildi!";
+        
+        $to_email = "chaparoglucavid@gmail.com";
+
+        Mail::send('admin.mail.accepted', $data, function($m) use ($title, $to_email) {
+            $m->from('laraveldeveloperr@gmail.com', env('APP_NAME'));
+            $m->to($to_email, env('MAIL_FROM_NAME'))->subject($title);
+        });
 
         return response()->json('Bron statusu müvəffəqiyyətlə dəyişdirildi', 200);
     }
@@ -67,63 +100,20 @@ class BronsController extends Controller
         $ikinciTarih = Carbon::createFromFormat('Y-m-d', $bron->drop_off); // İkinci tarih
         $gunFarki = $ilkTarih->diffInDays($ikinciTarih);
 
-        $brand = $bron->brands;
-        $model = $bron->models;
-        $car = $bron->cars;
-
-        if ($brand->discounts != null) {
-            $discount = $brand->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
-        if ($model->discounts != null) {
-            $discount = $model->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
-        if ($car->discounts != null) {
-            $discount = $car->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
         $general_settings = GeneralSettings::first();
 
-        return view('admin.brons.show', compact('bron', 'gunFarki', 'discount', 'general_settings'));
+        return view('admin.brons.show', compact('bron', 'gunFarki','general_settings'));
     }
 
     public function invoice_download($id)
     {
-        $bron = Brons::findOrFail($id);
-        $ilkTarih = Carbon::createFromFormat('Y-m-d', $bron->pick_up); // İlk tarih
-        $ikinciTarih = Carbon::createFromFormat('Y-m-d', $bron->drop_off); // İkinci tarih
-        $gunFarki = $ilkTarih->diffInDays($ikinciTarih);
+    $bron = Brons::findOrFail($id);
+    $ilkTarih = Carbon::createFromFormat('Y-m-d', $bron->pick_up);
+    $ikinciTarih = Carbon::createFromFormat('Y-m-d', $bron->drop_off);
+    $gunFarki = $ilkTarih->diffInDays($ikinciTarih);
 
-        $brand = $bron->brands;
-        $model = $bron->models;
-        $car = $bron->cars;
-
-        if ($brand->discounts != null) {
-            $discount = $brand->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
-        if ($model->discounts != null) {
-            $discount = $model->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
-        if ($car->discounts != null) {
-            $discount = $car->discounts->discount;
-        } else {
-            $discount = 0;
-        }
-
-        return view('admin.invoice', compact('bron', 'gunFarki', 'discount'));
+    $pdf = PDF::loadView('admin.invoice', compact('bron', 'gunFarki'))->setOptions(['defaultFont' => 'sans-serif']);
+    return $pdf->stream('invoice.pdf');
     }
 
     /**

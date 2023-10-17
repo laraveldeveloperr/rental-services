@@ -60,7 +60,7 @@ class CarsController extends Controller
         }
         return response()->json($cars, 200);
     }
-
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -69,9 +69,8 @@ class CarsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Cars::rules());
-
         $car = new Cars;
+        $car->fill($request->data);
         $car->brands_id = $request->brands_id;
         $car->models_id = $request->models_id;
         $car->fuels_id = $request->fuels_id;
@@ -84,14 +83,13 @@ class CarsController extends Controller
             $car_main_image = $request->file('main_image');
             $car_main_image->move(public_path('images/cars'), $car_main_image->getClientOriginalName());
             $car_main_image = $car_main_image->getClientOriginalName();
+            $car->main_image = $car_main_image;
         }
-        $car->main_image = $car_main_image;
         $car->licence_plate = $request->licence_plate;
         $car->manufacturing_year = $request->manufacturing_year;
         $car->day_price = $request->day_price ? $request->day_price : NULL;
         $car->week_price = $request->week_price ? $request->week_price : NULL;
         $car->month_price = $request->month_price ? $request->month_price : NULL;
-        $car->description = $request->description ? $request->description : NULL;
         $car->status = $request->status;
         $car->save();
 
@@ -195,9 +193,8 @@ class CarsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $this->validate($request,Cars::rules());
-
         $car = Cars::findOrFail($id);
+        $car->fill($request->data);
         $car->brands_id = $request->brands_id;
         $car->models_id = $request->models_id;
         $car->fuels_id = $request->fuels_id;
@@ -221,7 +218,6 @@ class CarsController extends Controller
         $car->day_price = $request->day_price ? $request->day_price : NULL;
         $car->week_price = $request->week_price ? $request->week_price : NULL;
         $car->month_price = $request->month_price ? $request->month_price : NULL;
-        $car->description = $request->description ? $request->description : NULL;
         $car->status = $request->status;
         $car->save();
 

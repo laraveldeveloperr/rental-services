@@ -44,9 +44,48 @@ class DiscountsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Discounts::rules());
-        $data = $request->all();
-        Discounts::create($data);
+        $inputData = $request->all();
+
+        $brandsId = $inputData['brands_id'];
+        $modelsId = $inputData['models_id'];
+        $carsId = $inputData['cars_id'];
+
+        // Tarih çakışmalarını kontrol etmek için ayrı sorgular oluşturun
+        $query = Discounts::where('brands_id', $brandsId);
+
+        if ($modelsId !== null) {
+            $query->where('models_id', $modelsId);
+        }
+
+        if ($carsId !== null) {
+            $query->where('cars_id', $carsId);
+        }
+
+        $discounts = $query->get();
+
+        $newDiscount = new Discounts([
+            'brands_id' => $brandsId,
+            'models_id' => $modelsId,
+            'cars_id' => $carsId,
+            'type' => $inputData['type'],
+            'discount' => $inputData['discount'],
+            'start_date' => $inputData['start_date'],
+            'end_date' => $inputData['end_date'],
+            'status' => $inputData['status'],
+        ]);
+
+        foreach ($discounts as $existingDiscount) {
+            if (
+                ($newDiscount->start_date >= $existingDiscount->start_date && $newDiscount->start_date <= $existingDiscount->end_date) ||
+                ($newDiscount->end_date >= $existingDiscount->start_date && $newDiscount->end_date <= $existingDiscount->end_date)
+            ) {
+                $existingDiscount->update($newDiscount->toArray());
+                toast('Daxil edilən tarixlər arasında endirim olduğu üçün endirim məlumatları yeniləndi', 'success');
+                return back();
+            }
+        }
+
+        $newDiscount->save();
 
         toast('Endirim müvəffəqiyyətlə tətbiq edildi', 'success');
         return back();
@@ -87,7 +126,7 @@ class DiscountsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Discounts::rules());
+        $this->validate($request, Discounts::rules());
         $data = $request->all();
         $discount = Discounts::findOrFail($id);
         $discount->update($data);
@@ -106,7 +145,7 @@ class DiscountsController extends Controller
     {
         $discount = Discounts::findOrFail($id);
         $discount->delete();
-        
+
         toast('Endirim məlumatları müvəffəqiyyətlə silindi', 'success');
         return back();
     }

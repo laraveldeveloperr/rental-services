@@ -20,25 +20,7 @@
         <div class="card">
             <div class="card-body">
                     <div class="d-flex justify-content-between align-items-baseline mb-2">
-                    <h6 class="card-title mb-0">Aylıq bronlar</h6>
-                    <div class="dropdown mb-2">
-                        <button class="btn btn-link p-0" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="icon-lg text-muted pb-3px" data-feather="more-horizontal"></i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="eye"
-                            class="icon-sm me-2"></i> <span class="">Ətraflı bax</span></a>
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="edit-2"
-                            class="icon-sm me-2"></i> <span class="">Düzəliş et</span></a>
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="trash"
-                            class="icon-sm me-2"></i> <span class="">Sil</span></a>
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="printer"
-                            class="icon-sm me-2"></i> <span class="">Çap et</span></a>
-                        <a class="dropdown-item d-flex align-items-center" href="javascript:;"><i data-feather="download"
-                            class="icon-sm me-2"></i> <span class="">Endir</span></a>
-                        </div>
-                    </div>
+                    <h6 class="card-title mb-0">{{ __('monthly_brons') }}</h6>
                     </div>
                     <div class="col-xl-12 grid-margin stretch-card">
                     <div class="card">
@@ -57,39 +39,39 @@
             <div class="table table-striped table-bordered">
                 <table class="table">
                     <tr>
-                        <td id="main-td">Marka</td>
+                        <td id="main-td">{{ __('brand') }}</td>
                         <td> {{ $car->brands->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Model</td>
+                        <td id="main-td">{{ __('model') }}</td>
                         <td> {{ $car->models->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Ban növü</td>
+                        <td id="main-td">{{ __('ban_type') }}</td>
                         <td> {{ $car->ban_types->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Yanacaq</td>
+                        <td id="main-td">{{ __('fuel_type') }}</td>
                         <td> {{ $car->fuels->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Ötürücü</td>
+                        <td id="main-td">{{ __('gear') }}</td>
                         <td> {{ $car->gears->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Sürət qutusu</td>
+                        <td id="main-td">{{ __('transmission') }}</td>
                         <td> {{ $car->transmissions->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Mator həcmi</td>
+                        <td id="main-td">{{ __('engine') }}</td>
                         <td> {{ $car->engines->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Rəng</td>
+                        <td id="main-td">{{ __('color') }}</td>
                         <td> {{ $car->colors->name }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Avtomobil özəllikləri</td>
+                        <td id="main-td">{{ __('car_properties') }}</td>
                         <td> 
                             <div class="list-group">
                                 @foreach ($car->properties as $property)
@@ -99,42 +81,42 @@
                         </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Dövlət qeydiyyat nişanı</td>
+                        <td id="main-td">{{ __('licence_plate') }}</td>
                         <td> {{ $car->licence_plate }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">İstehsal tarixi</td>
+                        <td id="main-td">{{ __('manufacturing_year') }}</td>
                         <td> {{ $car->manufacturing_year }} </td>
                     </tr>
                     <tr>
-                        <td id="main-td">Günlük qiymət</td>
+                        <td id="main-td">{{ __('daily_price') }}</td>
                         <td> {{ $car->day_price }} ₼</td>
                     </tr>
                     <tr>
-                        <td id="main-td">Həftəlik qiymət</td>
-                        <td> {{ is_null($car->week_price) ? 'Həftəlik qiymət təyin edilməyib' : $car->week_price .'₼' }} </td>
+                        <td id="main-td">{{ __('weekly_price') }}</td>
+                        <td> {{ is_null($car->week_price) ? __('weekly_price_not_specified') : $car->week_price .'₼' }} </td>
                     </tr>
                     <tr>
                         <td id="main-td">Aylıq qiymət</td>
-                        <td> {{ is_null($car->month_price) ? 'Aylıq qiymət təyin edilməyib' : $car->week_price .'₼' }} ₼</td>
+                        <td> {{ is_null($car->month_price) ? __('monthly_price_not_specified') : $car->week_price .'₼' }} ₼</td>
                     </tr>
                     <tr>
                         <td id="main-td">Status</td>
                         <td> 
                             <button class="btn btn-xs btn-outline-{{ $car->status == 1 ? 'success' : 'danger' }}">
-                            {{ $car->status == 1 ? 'Aktiv' : 'Deaktiv' }}
+                            {{ $car->status == 1 ? __('active') : __('deactive') }}
                             </button>    
                         </td> 
                     </tr>
                     <tr>
-                        <td id="main-td">Endirim</td>
+                        <td id="main-td">__('discount')</td>
                         <td> 
                         @if ($car->discounts)
                             <button class="btn btn-outline-{{ $car->discounts->status == 1 ? 'primary' : 'danger' }} btn-xs">
-                            Endirim {{ $car->discounts->discount }} {{ $car->discounts->type == 1 ? '%' : '₼' }}
+                            __('discount') {{ $car->discounts->discount }} {{ $car->discounts->type == 1 ? '%' : '₼' }}
                             </button>
                         @else
-                            <p class="text-danger">Endirim tətbiq edilməyib</p>
+                            <p class="text-danger">__('discount_not_specified')</p>
                             @endif  
                         </td> 
                     </tr>

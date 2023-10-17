@@ -38,12 +38,10 @@ class ColorsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Colors::rules());
-        $colors = new Engines;
-        $colors->name = $request->name;
-        $colors->slug = Str::slug($request->name);
-        $colors->status = $request->status;
-        $colors->save();
+        $color = new Colors;
+        $color->fill($request->data);
+        $color->status = $request->status;
+        $color->save();
 
         toast('Rəng müvəffəqiyyətlə əlavə edildi', 'success');
         return back();
@@ -81,12 +79,10 @@ class ColorsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Colors::rules());
-        $color = Colors::findOrFail($id);
-        $color->name = $request->name;
-        $color->slug = Str::slug($request->name);
-        $color->status = $request->status;
-        $color->save();
+        $engine = Colors::findOrFail($id);
+        $engine->fill($request->data);
+        $engine->status = $request->status;
+        $engine->save();
 
         toast('Rəng məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
         return back();

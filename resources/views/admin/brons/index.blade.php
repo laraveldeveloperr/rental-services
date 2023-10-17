@@ -2,16 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header">
-        <h3>Bronlar
-            <!-- <div class="float-end">
-                <a class="btn btn-success btn-xs" href="{{ route(ADMIN.'.brons.create') }}">
-                    <span>
-                        <i class="mdi mdi-plus"></i>
-                    </span>    
-                    Yeni Rəng
-                </a>
-            </div> -->
-        </h3>
+        <h3>{{ __('brons') }}</h3>
         </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -19,14 +10,15 @@
             <thead>
               <tr>
                 <th>№</th>
-                <th>Bron nömrəsi</th>
-                <th>Telefon</th>
-                <th>Avtomobil</th>
-                <th>Qiymət</th>
-                <th>Endirimli qiymət</th>
-                <th>Tarix</th>
-                <th>Status</th>
-                <th>İnvoys</th>
+                <th>{{ __('bron_number') }}</th>
+                <th>{{ __('phone') }}</th>
+                <th>{{ __('car') }}</th>
+                <th>{{ __('price') }}</th>
+                <th>{{ __('discount') }}</th>
+                <th>{{ __('discounted_price') }}</th>
+                <th>{{ __('date') }}</th>
+                <th>{{ __('status') }}</th>
+                <th>{{ __('invoice') }}</th>
               </tr>
             </thead>
             <tbody>
@@ -42,8 +34,9 @@
                     </td>
                 <td>{{ $bron->phone }}</td>
                 <td>{{ $bron->brands->name }} {{ $bron->models->name }} {{ $bron->cars->licence_plate }}</td>
-                <td>{{ $bron->price }}</td>
-                <td>{{ $bron->discounted_price }}</td>
+                <td>{{ $bron->price }} AZN</td>
+                <td>{{ $bron->discount }} {{ $bron->discount_type==1 ? '%' : 'AZN' }}</td>
+                <td>{{ $bron->discounted_price }} AZN</td>
                 <td>{{ $bron->pick_up }} <br> {{ $bron->drop_off }}</td>
                 <td>
                 <div class="btn-group">
@@ -52,22 +45,22 @@
                     $text = "";
                     if ($bron->status == 0) {
                         $class = "warning";
-                        $text = "Gözləyir";
+                        $text =  __('pending');
                     } elseif ($bron->status == 1) {
                         $class = "success";
-                        $text = "Qəbul edildi";
+                        $text = __('accepted');
                     } elseif ($bron->status == 2) {
                         $class = "danger";
-                        $text = "Qəbul edilmədi";
+                        $text = __('rejected');
                     }
                     @endphp
                     <button type="button" class="btn btn-{{ $class }} btn-xs dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         {{ $text }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item text-warning bron-status" disabled data-id="0" bron-id="{{ $bron->id }}">Gözləyən</button></li>
-                        <li><button class="dropdown-item text-success bron-status" data-id="1" bron-id="{{ $bron->id }}">Qəbul edildi</button></li>
-                        <li><button class="dropdown-item text-danger bron-status" data-id="2" bron-id="{{ $bron->id }}">Qəbul edilmədi</button></li>
+                        <li><button class="dropdown-item text-warning bron-status" disabled data-id="0" bron-id="{{ $bron->id }}">{{  __('pending') }}</button></li>
+                        <li><button class="dropdown-item text-success bron-status" data-id="1" bron-id="{{ $bron->id }}">{{  __('accepted') }}</button></li>
+                        <li><button class="dropdown-item text-danger bron-status" data-id="2" bron-id="{{ $bron->id }}">{{  __('rejected') }}</button></li>
                     </ul>
                 </div>
                 </td>
@@ -75,7 +68,7 @@
                 <ul class="list-inline">
                             <li class="list-inline-item">
                               <a href="{{ route(ADMIN.'.brons.show', $bron->id) }}" class="dropdown-item d-flex align-items-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="">İnvoys</span>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="">{{  __('invoice') }}</span>
                               </a>
                             </li>
                             <!-- <li class="list-inline-item">

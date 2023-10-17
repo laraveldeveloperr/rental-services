@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(RoleSeeder::class);
+        $this->call(PermissionSeeder::class);
         $this->call(users::class);
         $this->call(BrandsSeeder::class);
         $this->call(ModelsSeeder::class);
@@ -27,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ColorsSeeder::class);
         $this->call(GeneralSettingsSeeder::class);
         $this->call(FaqSeeder::class);
+        $this->call(PageDesignSeeder::class);
+        $this->call(TranslationsSeeder::class);
 
         if (config('variables.WITH_FAKER')) {
             // FAKE data

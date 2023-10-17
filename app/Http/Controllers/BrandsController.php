@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brands;
+use App\Models\Languages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+
+use Session;
 
 class BrandsController extends Controller
 {
@@ -25,8 +28,18 @@ class BrandsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        // $lang = $request->get('lang');
+        // $filePath = config_path('app.php');
+        // $newLocale = is_null($lang) ? 'az' : $lang; 
+        // $fileContent = file_get_contents($filePath);
+        // $fileContent = preg_replace(
+        //     "/'locale' => '.*'/",
+        //     "'locale' => '$newLocale'",
+        //     $fileContent
+        // );
+        // file_put_contents($filePath, $fileContent);
         return view('admin.brands.create');
     }
 
@@ -38,16 +51,14 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,Brands::rules());
         $brand = new Brands;
-        $brand->name = $request->name;
+        $brand->fill($request->data);
         if ($request->file('icon')) {
             $brand_icon = $request->file('icon');
             $brand_icon->move(public_path('images/brands'), $brand_icon->getClientOriginalName());
             $brand_icon = $brand_icon->getClientOriginalName();
         }
         $brand->icon = $brand_icon;
-        $brand->slug = Str::slug($brand->name);
         $brand->status = $request->status;
         $brand->save();
 
@@ -87,9 +98,8 @@ class BrandsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,Brands::rules());
         $brand = Brands::findOrFail($id);
-        $brand->name = $request->name;
+        $brand->fill($request->data);
         if ($request->file('icon')) {
             $oldIcon = $brand->icon;
             $brand_icon = $request->file('icon');
@@ -100,14 +110,10 @@ class BrandsController extends Controller
                 unlink(public_path('images/brands/' . $oldIcon));
             }
         }
-        $brand->slug = Str::slug($brand->name);
         $brand->status = $request->status;
-        try {
-            $brand->save();
-            toast('Marka məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
-        } catch (\Exception $e) {
-            toast('Marka məlumatlarını dəyişdirərkən xəta baş verdi', 'error');
-        }
+        $brand->save();
+        toast('Marka məlumatları müvəffəqiyyətlə dəyişdirildi', 'success');
+       
         return back();
     }
 

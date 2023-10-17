@@ -17,8 +17,8 @@ return new class extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('brands_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('models_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
-            $table->foreignId('cars_id')->nullable()->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('models_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('cars_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('type');
             $table->double('discount', 10, 2);
             $table->date('start_date');

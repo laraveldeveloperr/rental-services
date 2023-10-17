@@ -2,13 +2,13 @@
 @section('content')
 <div class="card">
 	<div class="card-header">
-        <h3>Bloq
+        <h3>{{ $blog->title }}
             <div class="float-end">
                 <a class="btn btn-danger btn-xs" href="{{ route(ADMIN.'.blogs.index') }}">
                     <span>
                         <i class="mdi mdi-arrow-left"></i>
                     </span>    
-                    Bloqlar
+                    {{ __('blogs') }}
                 </a>
             </div>
         </h3>

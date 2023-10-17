@@ -31,14 +31,14 @@
     <script  src="{{ asset('assets/plugins/datatables-net-bs5/dataTables.bootstrap5.js')}}"></script>
     <script  src="{{ asset('assets/plugins/dropify/js/dropify.min.js')}}"></script>
     <script  src="{{ asset('assets/js/dropify.js')}}"></script>
-    <script  src="{{ asset('assets/plugins/dropzone/dropzone.min.js')}}"></script>
-    <script  src="{{ asset('assets/js/dropzone.js')}}"></script>
     <script  src="{{ asset('assets/js/select2.js')}}"></script>
     <script src="{{asset('assets/js/inputmask.js')}}"></script>
     <script src="{{ asset('assets/plugins/jquery-tags-input/jquery.tagsinput.min.js')}}"></script>
     <script src="{{ asset('assets/js/tags-input.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script  src="{{ asset('assets/plugins/dropzone/dropzone.min.js')}}"></script>
+    <script  src="{{ asset('assets/js/dropzone.js')}}"></script>
 
     @stack('js')
   </body>

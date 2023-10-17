@@ -19,9 +19,6 @@ return new class extends Migration
             $table->text('numbers')->nullable();
             $table->text('emails')->nullable();
             $table->text('social_networks')->nullable();
-            $table->string('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
-            $table->text('meta_keywords')->nullable();
             $table->integer('repair_mode')->default(0);
             $table->softDeletes();
             $table->timestamps();

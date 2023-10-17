@@ -1,6 +1,8 @@
 <?php 
 use App\Models\Translations;
 use App\Models\Languages;
+use Illuminate\Database\Eloquent\Model;
+
 
 if (! function_exists('move_file')) {
     function move_file($file, $type='avatar', $withWatermark = false)
@@ -39,3 +41,24 @@ if (! function_exists('move_file')) {
         return $full_name;
     }
 }
+
+function get_roles()
+{
+    $roles = Spatie\Permission\Models\Role::pluck('name')->toArray();
+    return implode("|", $roles);
+}
+
+if (!function_exists('translatedInAndActive')) {
+    /**
+     * Get translated records with a given language and active status.
+     *
+     * @param Model $model
+     * @param string $lang
+     * @return mixed
+     */
+    function translatedInAndActive(Model $model, $lang)
+    {
+        return $model->translatedIn($lang)->where('status', 1)->get();
+    }
+}
+

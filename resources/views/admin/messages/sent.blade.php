@@ -11,12 +11,12 @@
               <div class="row align-items-center">
                 <div class="col-lg-6">
                   <div class="d-flex align-items-end mb-2 mb-md-0">
-                    <h4 class="me-1">Göndərilən mesajlar</h4>
+                    <h4 class="me-1">{{ __('sent') }}</h4>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="input-group">
-                    <input class="form-control" type="text" placeholder="email axtar...">
+                    <input class="form-control" type="text" placeholder="{{ __('search_email') }}">
                     <button class="btn btn-light btn-icon" type="button" id="button-search-addon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></button>
                   </div>
                 </div>
@@ -28,9 +28,9 @@
                   <input type="checkbox" class="form-check-input" id="inboxCheckAll">
                 </div>
                 <div class="btn-group me-2">
-                  <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button"> Seçilənlərə tətbiq et <span class="caret"></span></button>
+                  <button class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" type="button"> {{ __('apply_to_selected') }} <span class="caret"></span></button>
                   <div class="dropdown-menu" role="menu">
-                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger destroy-selected" href="#">Sil</a>
+                    <div class="dropdown-divider"></div><a class="dropdown-item text-danger destroy-selected" href="#">{{ __('delete') }}</a>
                   </div>
                 </div>
               </div>
