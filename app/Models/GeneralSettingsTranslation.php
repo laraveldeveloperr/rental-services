@@ -10,7 +10,7 @@ class GeneralSettingsTranslation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'address', 'about_text','privacy_policy','meta_title', 'meta_keywords', 'meta_description'
+        'address', 'about_text','privacy_policy','meta_title', 'meta_keywords', 'meta_description', 'home_about_section_text', 'banner1_text', 'footer_text' 
     ];
 
     /*

@@ -12,8 +12,7 @@
                         </div>
                         <div class="col-md-8">
                            <div class="find-form">
-                              <form method="POST" action="{{ route('search') }}">
-                              @csrf   
+                              <form method="GET" action="{{ route('search') }}">
                               <div class="row">
                                     <div class="col-md-12">
                                        <p>
@@ -29,7 +28,7 @@
                                  <div class="row">
                                     <div class="col-md-4">
                                        <p>
-                                          <input id="start_date" name="start_date" placeholder="{{ __('select_start_date') }}" data-select="datepicker" type="text">
+                                          <input id="start_date" name="start_date"  placeholder="{{ __('select_start_date') }}" data-select="datepicker" type="text">
                                        </p>
                                     </div>
                                     <div class="col-md-4">

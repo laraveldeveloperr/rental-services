@@ -9,7 +9,16 @@ class Partners extends Model
 {
     use HasFactory;
 
-    protected $fillable = [];
+    protected $fillable = [
+        'company_name',
+        'voen',
+        'address',
+        'phone_number',
+        'email',
+        'logo',
+        'relevant_person',
+        'status'
+    ];
 
     /*
     |------------------------------------------------------------------------------------
@@ -19,7 +28,13 @@ class Partners extends Model
     public static function rules($update = false, $id=null)
     {
         return [
-            'name' => 'required',
+            'company_name' => 'required',
+            'address' => 'required',
+            'voen' => 'required',
+            'phone_number' => 'required',
+            'email' => 'required',
+            'relevant_person' => 'required',
+            'status' => 'required'
         ];
     }
 

@@ -39,6 +39,7 @@
                                     <span class="">{{ __('answered') }}</span></button>
                             @else
                             <ul class="list-inline">
+                                @can('answer')
                                 <li class="list-inline-item">
                                     {!! Form::open([
                                     'class'=>'update',
@@ -51,6 +52,7 @@
                                     <span class="">{{ __('mark_as_answered') }}</span></button>
                                     {!! Form::close() !!}
                                 </li>
+                                @endcan
                             </ul>
                             @endif
                         </td>

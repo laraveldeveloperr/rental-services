@@ -34,6 +34,30 @@
                         </ul>
                     </div>
 
+                    <div class="sidebar-widget">
+                        <form method="GET" action="{{ route('search') }}">
+                            <p>
+                                <select class="brands_id" name="brands_id">
+                                    <option data-display="Marka">{{ __('brands') }}</option>
+                                    @foreach ($brands_ as $brand)
+                                    <option value="{{ $brand->id }}" {{ isset($_GET['brands_id'])==$brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
+                                    @endforeach
+                                </select>
+                            </p>
+                            <p>
+                                <input id="start_date" value="{{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}" name="start_date" placeholder="{{ __('select_start_date') }}"
+                                    data-select="datepicker" type="text">
+                            </p>
+                            <p>
+                                <input id="end_date" value="{{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}" name="end_date" placeholder="{{ __('select_end_date') }}"
+                                    data-select="datepicker" type="text">
+                            </p>
+                            <p>
+                                <button type="submit" class="gauto-theme-btn">{{ __('find_car') }}</button>
+                            </p>
+                        </form>
+                    </div>
+
                 </div>
             </div>
             <div class="col-lg-8">
@@ -73,12 +97,12 @@
                             <div class="col-md-6">
                                 <div class="single-offers">
                                     <div class="offer-image">
-                                        <a href="{{ route('car-details', $car->id) }}">
+                                        <a href="{{ route('car-details', $car->id) }}?brands_id={{ isset($_GET['brands_id']) ? $_GET['brands_id'] : '' }}&start_date={{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}&end_date={{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}">
                                             <img src="{{ asset('images/cars').'/'.$car->main_image }}" alt="offer 1">
                                         </a>
                                     </div>
                                     <div class="offer-text">
-                                        <a href="{{ route('car-details', $car->id) }}">
+                                        <a href="{{ route('car-details', $car->id) }}?brands_id={{ isset($_GET['brands_id']) ? $_GET['brands_id'] : '' }}&start_date={{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}&end_date={{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}">
                                             <h3>{{ $car->brands->name }} {{ $car->models->name }}</h3>
                                         </a>
                                         <h4>{{ $car->day_price }} AZN<span>/ Day</span></h4>
@@ -89,9 +113,9 @@
                                             <li><i class="fa fa-dashboard"></i>{{ $car->engines->name }}</li>
                                         </ul>
                                         <div class="offer-action">
-                                            <a href="{{ route('car-details', $car->id) }}" class="offer-btn-1">Rent
+                                            <a href="{{ route('car-details', $car->id) }}?brands_id={{ isset($_GET['brands_id']) ? $_GET['brands_id'] : '' }}&start_date={{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}&end_date={{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}" class="offer-btn-1">Rent
                                                 Car</a>
-                                            <a href="{{ route('car-details', $car->id) }}"
+                                            <a href="{{ route('car-details', $car->id) }}?brands_id={{ isset($_GET['brands_id']) ? $_GET['brands_id'] : '' }}&start_date={{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}&end_date={{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}"
                                                 class="offer-btn-2">Details</a>
                                         </div>
                                     </div>

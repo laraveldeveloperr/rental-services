@@ -46,6 +46,8 @@ Auth::routes();
         Route::resource('blogs', 'BlogsController');
         Route::resource('call-requests', 'CallRequestsController');
         Route::resource('services', 'ServicesController');
+        Route::resource('partners', 'PartnersController');
+        Route::resource('teams', 'TeamController');
         
         Route::resource('faqs', 'SiteFaqsController');
         Route::resource('car-faqs', 'CarsFaqsController');
@@ -93,7 +95,7 @@ Auth::routes();
     Route::get('car-listing', [CarListingController::class, 'index'])->name('car-listing');
     Route::get('{id}/car-details', [CarListingController::class, 'car_details'])->name('car-details');
 
-    Route::post('/search', [SearchController::class, 'search'])->name('search');
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 
     Route::get('services', [ServicesController::class, 'index'])->name('services');
     Route::get('service-details/{slug}', [ServicesController::class, 'show'])->name('services.show');
@@ -103,6 +105,8 @@ Auth::routes();
     Route::get('blogs', [BlogsController::class, 'index'])->name('blogs');
     Route::get('blog-details/{slug}', [BlogsController::class, 'show'])->name('blogs.show');
     Route::post('request-a-call', [HomeController::class, 'call_request'])->name('request-a-call');
+    Route::post('be-a-partner', [HomeController::class, 'be_partner'])->name('be-a-partner');
+    Route::get('calculate-price', [HomeController::class, 'calculate_price'])->name('calculate-price');
 
     Route::get('contact', [ContactController::class, 'index'])->name('contact');
 

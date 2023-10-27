@@ -5,12 +5,12 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="breadcromb-box">
-                     <h3>All Service</h3>
+                     <h3>{{ __('all_services') }}</h3>
                      <ul>
                         <li><i class="fa fa-home"></i></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">{{ __('home') }}</a></li>
                         <li><i class="fa fa-angle-right"></i></li>
-                        <li>All Service</li>
+                        <li>{{ __('all_services') }}</li>
                      </ul>
                   </div>
                </div>
@@ -23,8 +23,7 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="site-heading">
-                     <h4>see our</h4>
-                     <h2>Latest Services</h2>
+                     <h2>{{ __('latest_services') }}</h2>
                   </div>
                </div>
             </div>

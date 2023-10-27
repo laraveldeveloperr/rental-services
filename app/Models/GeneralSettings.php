@@ -19,7 +19,7 @@ class GeneralSettings extends Model implements TranslatableContract
         'repair_mode'
     ];
 
-    public $translatedAttributes = ['address', 'about_text', 'privacy_policy' ,'meta_title', 'meta_keywords', 'meta_description'];
+    public $translatedAttributes = ['address', 'about_text', 'privacy_policy' ,'meta_title', 'meta_keywords', 'meta_description', 'home_about_section_text', 'banner1_text', 'footer_text'];
 
     /*
     |------------------------------------------------------------------------------------

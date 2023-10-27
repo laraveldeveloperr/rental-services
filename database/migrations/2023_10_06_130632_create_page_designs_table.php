@@ -28,6 +28,9 @@ return new class extends Migration
             $table->integer('members')->default(0);
             $table->integer('offers')->default(0);
             $table->integer('services')->default(0);
+            $table->string('home_about_section_image')->nullable();
+            $table->string('banner1_image')->nullable();
+            $table->string('banner2_image')->nullable();
             $table->timestamps();
         });
     }

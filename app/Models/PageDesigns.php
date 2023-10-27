@@ -22,7 +22,10 @@ class PageDesigns extends Model
         'comments_for_site',
         'members',
         'offers',
-        'services'
+        'services',
+        'home_about_section_image',
+        'banner1_image',
+        'banner2_image',
     ];
 
     /*

@@ -5,12 +5,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="breadcromb-box">
-                    <h3>Car Listing</h3>
+                    <h3>{{ __('car_listing') }}</h3>
                     <ul>
                         <li><i class="fa fa-home"></i></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">{{ __('home') }}</a></li>
                         <li><i class="fa fa-angle-right"></i></li>
-                        <li>car listing</li>
+                        <li>{{ __('car_listing') }}</li>
                     </ul>
                 </div>
             </div>
@@ -23,11 +23,40 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="car-list-left">
-                    
+
                     <div class="sidebar-widget">
                         <ul class="service-menu">
+                            @php 
+                                if(isset($_GET['brands_id']))
+                                {
+                                    $brand_id = $_GET['brands_id'];
+                                }
+                                else
+                                {
+                                    $brand_id = 0;
+                                }
+
+                                if(isset($_GET['start_date']))
+                                {
+                                    $start_date = $_GET['start_date'];
+                                }
+                                else
+                                {
+                                    $start_date_ = Carbon\Carbon::now()->startOfDay();
+                                    $start_date = $start_date_->format('d/m/Y');
+                                }
+                                if(isset($_GET['end_date']))
+                                {
+                                    $end_date = $_GET['end_date'];
+                                }
+                                else
+                                {
+                                    $end_date_ = $start_date_->copy()->addWeek();
+                                    $end_date = $end_date_->format('d/m/Y');
+                                }
+                                @endphp
                             @foreach ($brands as $brand)
-                            <li class="active">
+                            <li class="{{ $brand_id==$brand->id ? 'active' : '' }}">
                                 <a href="#">{{ $brand->name }}<span>({{ $brand->cars->count() }})</span></a>
                             </li>
                             @endforeach
@@ -35,36 +64,25 @@
                     </div>
 
                     <div class="sidebar-widget">
-                        <form>
+                        <form method="GET" action="{{ route('search') }}">
                             <p>
-                                <input type="text" placeholder="From Address">
-                            </p>
-                            <p>
-                                <input type="text" placeholder="To Address">
-                            </p>
-                            <p>
-                                <select style="display: none;">
-                                    <option data-display="Select">AC Car</option>
-                                    <option>Non-AC Car</option>
+                                <select class="brands_id" name="brands_id">
+                                    <option data-display="Marka">{{ __('brands') }}</option>
+                                    @foreach ($brands_ as $brand)
+                                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                    @endforeach
                                 </select>
-                                <div class="nice-select" tabindex="0"><span class="current">Select</span>
-                                    <ul class="list">
-                                        <li data-value="AC Car" data-display="Select" class="option selected">AC Car
-                                        </li>
-                                        <li data-value="Non-AC Car" class="option">Non-AC Car</li>
-                                    </ul>
-                                </div>
                             </p>
                             <p>
-                                <input id="reservation_date" name="reservation_date" placeholder="Journey Date"
+                                <input id="start_date" name="start_date" placeholder="{{ __('select_start_date') }}"
                                     data-select="datepicker" type="text">
                             </p>
-                            <p class="input-group clockpicker" data-placement="bottom" data-align="top"
-                                data-autoclose="true">
-                                <input type="text" class="form-control" placeholder="Journey Time">
+                            <p>
+                                <input id="end_date" name="end_date" placeholder="{{ __('select_end_date') }}"
+                                    data-select="datepicker" type="text">
                             </p>
                             <p>
-                                <button type="submit" class="gauto-theme-btn">Find Car</button>
+                                <button type="submit" class="gauto-theme-btn">{{ __('find_car') }}</button>
                             </p>
                         </form>
                     </div>
@@ -107,26 +125,27 @@
                             <div class="col-md-6">
                                 <div class="single-offers">
                                     <div class="offer-image">
-                                        <a href="{{ route('car-details', $car->id) }}">
+                                        <a href="{{ route('car-details', $car->id) }}?start_date={{ $start_date }}&end_date={{ $end_date }}">
                                             <img src="{{ asset('images/cars').'/'.$car->main_image }}" alt="offer 1">
                                         </a>
                                     </div>
                                     <div class="offer-text">
-                                        <a href="{{ route('car-details', $car->id) }}">
+                                        <a href="{{ route('car-details', $car->id) }}?start_date={{ $start_date }}&end_date={{ $end_date }}">
                                             <h3>{{ $car->brands->name }} {{ $car->models->name }}</h3>
                                         </a>
-                                        <h4>{{ $car->day_price }} AZN<span>/ Day</span></h4>
+                                        <h4>{{ $car->day_price }} AZN<span>/ {{ __('day') }}</span></h4>
                                         <ul>
-                                            <li><i class="fa fa-car"></i>Buraxılış ili: {{ $car->manufacturing_year }}
+                                            <li><i class="fa fa-car"></i>{{ __('manufacturing_year') }}: {{ $car->manufacturing_year }}
                                             </li>
                                             <li><i class="fa fa-cogs"></i>{{ $car->transmissions->name }}</li>
                                             <li><i class="fa fa-dashboard"></i>{{ $car->engines->name }}</li>
                                         </ul>
                                         <div class="offer-action">
-                                            <a href="{{ route('car-details', $car->id) }}" class="offer-btn-1">Rent
-                                                Car</a>
-                                            <a href="{{ route('car-details', $car->id) }}"
-                                                class="offer-btn-2">Details</a>
+                                            <a href="{{ route('car-details', $car->id) }}?start_date={{ $start_date }}&end_date={{ $end_date }}" class="offer-btn-1">
+                                                {{ __('rent') }}
+                                            </a>
+                                            <a href="{{ route('car-details', $car->id) }}?start_date={{ $start_date }}&end_date={{ $end_date }}"
+                                                class="offer-btn-2">{{ __('details') }}</a>
                                         </div>
                                     </div>
                                 </div>

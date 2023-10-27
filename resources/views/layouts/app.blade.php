@@ -9,7 +9,6 @@
    $metaKeywords = json_decode($general_settings->meta_keywords, true);
    @endphp
 
-   <!-- Ardından meta etiketlerini oluştur -->
    <meta name="description" content="{{ $general_settings->meta_description }}">
    <meta name="keywords" content="{{ implode(', ', $metaKeywords) }}">
    <meta name="author" content="Themescare">
@@ -117,12 +116,12 @@
          text-align: left;
          /* Etiketlerle aynı hizada olmalarını sağlar */
       }
+
    </style>
    @stack('css')
 </head>
 
 <body>
-
    <!-- Header Top Area Start -->
    <section class="gauto-header-top-area">
       <div class="container">
@@ -186,7 +185,69 @@
                      </div>
                   </div>
 
-                  <a href="#" class="header-action"><i class="fa fa-phone"></i> {{ __('be_a_partner') }} </a>
+                  <a href="#" class="header-action" data-toggle="modal" data-target="#partnerModal">
+                     <i class="fa fa-handshake-o"></i> {{ __('be_a_partner') }}
+                  </a>
+
+                  <div class="modal fade" id="partnerModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                           <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">{{ __('be_a_partner') }}</h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                           </div>
+                           <form method="POST" action="{{ route('be-a-partner') }}">
+                              @csrf
+                              <div class="modal-body">
+                                 <div class="row">
+                                    <div class="col-12">
+                                       <label for="company_name">{{ __('company_name') }}</label>
+                                       <input type="text" id="company_name" name="company_name" class="form-control"
+                                          placeholder="{{ __('company_name') }}">
+                                    </div>
+                                    <div class="col-12">
+                                       <label for="address">{{ __('address') }}</label>
+                                       <input type="text" name="address" class="form-control"
+                                          placeholder="{{ __('address') }}">
+                                    </div>
+                                    <div class="col-12">
+                                       <label for="voen">{{ __('voen') }}</label>
+                                       <input type="text" name="voen" class="form-control"
+                                          placeholder="{{ __('voen') }}">
+                                    </div>
+                                    <div class="col-12">
+                                       <label for="number">{{ __('number') }}</label>
+                                       <input type="text" name="phone_number" class="form-control"
+                                          placeholder="{{ __('number') }}">
+                                    </div>
+                                    <div class="col-12">
+                                       <label for="email">{{ __('email') }}</label>
+                                       <input type="text" name="email" class="form-control"
+                                          placeholder="{{ __('email') }}">
+                                    </div>
+                                    <div class="col-12">
+                                       <label for="relevant_person">{{ __('relevant_person') }}</label>
+                                       <input type="text" name="relevant_person" class="form-control"
+                                          placeholder="{{ __('relevant_person') }}">
+                                    </div>
+                                 </div>
+
+                              </div>
+                              <div class="modal-footer">
+                                 <div class="col-md-4">
+                                    <p>
+                                       <button type="submit" class="gauto-theme-btn">{{ __('send') }}</button>
+                                    </p>
+                                 </div>
+                              </div>
+                           </form>
+                        </div>
+                     </div>
+                  </div>
+
                   <div class="dropdown">
                      <button class="btn-dropdown dropdown-toggle" type="button" id="dropdownlang" data-toggle="dropdown"
                         aria-haspopup="true">
@@ -214,7 +275,7 @@
             <div class="col-md-6">
                <div class="site-logo">
                   <a href="/">
-                     <img src="{{ asset('frontend/img/logo.png')}}" alt="gauto" />
+                     <img src="{{ asset('images').'/'.$general_settings->logo}}" alt="gauto" style="height:50px;" />
                   </a>
                </div>
             </div>
@@ -291,14 +352,7 @@
                            <img src="{{ asset('frontend/img/footer-logo.png')}}" alt="footer-logo" />
                         </a>
                      </div>
-                     @php
-                     $metin = $general_settings->about_text;
-                     $cumleler = preg_split('/[.!?]/', $metin);
-                     $ilk_bes_cümle = array_slice($cumleler, 0, 5);
-                     @endphp
-                     @foreach ($ilk_bes_cümle as $cümle)
-                     <p>{{ trim($cümle) }}</p>
-                     @endforeach
+                     <p>{!! $general_settings->footer_text !!}</p>
                      <div class="footer-address">
                         <h3>{{ __('head_office') }}</h3>
                         <p>{{ $general_settings->address }}</span></p>
@@ -369,17 +423,7 @@
             <div class="row">
                <div class="col-md-6">
                   <div class="copyright">
-                     <p>Design With <i class="fa fa-heart"></i> from <a href="#">Themescare</a></p>
-                  </div>
-               </div>
-               <div class="col-md-6">
-                  <div class="footer-social">
-                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="#"><i class="fa fa-skype"></i></a></li>
-                     </ul>
+                     <p>RENTAL Services MMC </p>
                   </div>
                </div>
             </div>
@@ -388,7 +432,6 @@
    </footer>
    <!-- Footer Area End -->
 
-   @include('sweetalert::alert')
    <!--Jquery js-->
    <script src="{{ asset('frontend/js/jquery.min.js')}}"></script>
    <!-- Popper JS -->
@@ -412,18 +455,6 @@
    <script src="{{ asset('frontend/js/jquery-clockpicker.min.js')}}"></script>
    <!--Main js-->
    <script src="{{ asset('frontend/js/main.js')}}"></script>
-   @if(session('swal2-select-hidden'))
-   <script>
-      document.addEventListener('DOMContentLoaded', function() {
-         const selectElements = document.querySelectorAll('.swal2-select');
-         if (selectElements.length > 0) {
-            selectElements.forEach(element => {
-               element.style.display = 'none';
-            });
-         }
-      });
-   </script>
-   @endif
    @stack('js')
 </body>
 

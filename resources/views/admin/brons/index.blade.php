@@ -58,19 +58,27 @@
                         {{ $text }}
                     </button>
                     <ul class="dropdown-menu">
-                        <li><button class="dropdown-item text-warning bron-status" disabled data-id="0" bron-id="{{ $bron->id }}">{{  __('pending') }}</button></li>
-                        <li><button class="dropdown-item text-success bron-status" data-id="1" bron-id="{{ $bron->id }}">{{  __('accepted') }}</button></li>
-                        <li><button class="dropdown-item text-danger bron-status" data-id="2" bron-id="{{ $bron->id }}">{{  __('rejected') }}</button></li>
+                      @can('pending')
+                      <li><button class="dropdown-item text-warning bron-status" disabled data-id="0" bron-id="{{ $bron->id }}">{{  __('pending') }}</button></li>
+                      @endcan
+                      @can('accept')
+                      <li><button class="dropdown-item text-success bron-status" data-id="1" bron-id="{{ $bron->id }}">{{  __('accepted') }}</button></li>
+                      @endcan
+                      @can('reject')
+                      <li><button class="dropdown-item text-danger bron-status" data-id="2" bron-id="{{ $bron->id }}">{{  __('rejected') }}</button></li>
+                      @endcan
                     </ul>
                 </div>
                 </td>
                 <td>
                 <ul class="list-inline">
-                            <li class="list-inline-item">
-                              <a href="{{ route(ADMIN.'.brons.show', $bron->id) }}" class="dropdown-item d-flex align-items-center">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="">{{  __('invoice') }}</span>
-                              </a>
-                            </li>
+                  @can('show')
+                  <li class="list-inline-item">
+                    <a href="{{ route(ADMIN.'.brons.show', $bron->id) }}" class="dropdown-item d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye icon-sm me-2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg> <span class="">{{  __('invoice') }}</span>
+                    </a>
+                  </li>
+                  @endcan
                             <!-- <li class="list-inline-item">
                                 {!! Form::open([
                                 'class'=>'delete',

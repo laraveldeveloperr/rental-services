@@ -23,6 +23,9 @@ return new class extends Migration
             $table->text('about_text')->nullable();
             $table->text('privacy_policy')->nullable();
             $table->text('meta_description')->nullable();
+            $table->text('home_about_section_text')->nullable();
+            $table->text('banner1_text')->nullable();
+            $table->text('footer_text')->nullable();
             $table->timestamps();
 
             $table->unique(['general_settings_id', 'locale']);

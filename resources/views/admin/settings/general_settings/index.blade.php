@@ -36,15 +36,38 @@
           <div class="row mb-3">
             <label for="about_text" class="col-sm-3 col-form-label">{{ __('about') }}</label>
             <div class="col-sm-9">
-              <textarea id="summernote" name="data[{{ $lang->shortened }}][about_text]"
+              <textarea id="summernote-{{ $lang->shortened }}" name="data[{{ $lang->shortened }}][about_text]"
                 height="300">{{ !is_null($general_settings->about_text) ? $general_settings->about_text : '' }}</textarea>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="home_about_section_text" class="col-sm-3 col-form-label">{{ __('home_about_section_text') }}</label>
+            <div class="col-sm-9">
+              <textarea id="summernote-{{ $lang->shortened }}-about-section" name="data[{{ $lang->shortened }}][home_about_section_text]"
+                height="300">{{ !is_null($general_settings->home_about_section_text) ? $general_settings->home_about_section_text : '' }}</textarea>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <label for="banner1_text" class="col-sm-3 col-form-label">{{ __('banner1_text') }}</label>
+            <div class="col-sm-9">
+              <textarea id="summernote-{{ $lang->shortened }}-banner1" name="data[{{ $lang->shortened }}][banner1_text]"
+                height="300">{{ !is_null($general_settings->banner1_text) ? $general_settings->banner1_text : '' }}</textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <label for="footer_text" class="col-sm-3 col-form-label">{{ __('footer_text') }}</label>
+            <div class="col-sm-9">
+              <textarea id="summernote-{{ $lang->shortened }}-footer" name="data[{{ $lang->shortened }}][footer_text]"
+                height="300">{{ !is_null($general_settings->footer_text) ? $general_settings->footer_text : '' }}</textarea>
             </div>
           </div>
 
           <div class="row mb-3">
             <label for="privacy_policy" class="col-sm-3 col-form-label">{{ __('privacy_policy') }}</label>
             <div class="col-sm-9">
-              <textarea id="summernote-privacy-policy" name="data[{{ $lang->shortened }}][privacy_policy]"
+              <textarea id="summernote-{{ $lang->shortened }}-privacy-policy" name="data[{{ $lang->shortened }}][privacy_policy]"
                 height="300">{{ !is_null($general_settings->privacy_policy) ? $general_settings->privacy_policy : '' }}</textarea>
             </div>
           </div>
@@ -62,14 +85,14 @@
             <label for="meta_keywords" class="col-sm-3 col-form-label">{{ __('meta_keywords') }}</label>
             <div class="col-sm-9">
               <input name="data[{{ $lang->shortened }}][meta_keywords][]"
-                value="{{ implode(',', json_decode($general_settings->meta_keywords, true)) }}" placeholder="{{ __('enter_meta_keywords') }}" id="tags" />
+                value="{{ implode(',', json_decode($general_settings->meta_keywords, true)) }}" placeholder="{{ __('enter_meta_keywords') }}" id="tags-{{ $lang->shortened }}" />
             </div>
           </div>
 
           <div class="row mb-3">
             <label for="meta_description" class="col-sm-3 col-form-label">{{ __('meta_description') }}</label>
             <div class="col-sm-9">
-              <textarea id="description" name="data[{{ $lang->shortened }}][meta_description]"
+              <textarea id="description-{{ $lang->shortened }}" name="data[{{ $lang->shortened }}][meta_description]"
                 height="300">{{ !is_null($general_settings->meta_description) ? $general_settings->meta_description : '' }}</textarea>
             </div>
           </div>
@@ -162,7 +185,9 @@
           </div>
         </div>
 
+        @can('edit general settings')
         <button type="submit" class="btn btn-primary me-2">{{ __('save') }}</button>
+        @endcan
       </div>
     </form>
 </div>
@@ -172,15 +197,28 @@
 @push('js')
 <script>
   $(document).ready(function() {
-    $('#summernote').summernote({
+    @foreach ($languages as $lang_key => $lang)
+    $('#summernote-{{ $lang->shortened }}').summernote({
       height: 300
     });
-    $('#summernote-privacy-policy').summernote({
+    $('#summernote-{{ $lang->shortened }}-about-section').summernote({
       height: 300
     });
-    $('#description').summernote({
+    $('#summernote-{{ $lang->shortened }}-banner1').summernote({
       height: 300
     });
+    $('#summernote-{{ $lang->shortened }}-footer').summernote({
+      height: 300
+    });
+    $('#summernote-{{ $lang->shortened }}-privacy-policy').summernote({
+      height: 300
+    });
+    $('#description-{{ $lang->shortened }}').summernote({
+      height: 300
+    });
+
+    $('#tags-{{ $lang->shortened }}').tagsInput();
+    @endforeach
     $(".add-phone-number").click(function() {
       var newInput = '<div class="input-group mb-2">' +
         '<input type="text" name="numbers[]" class="mt-2 form-control" placeholder="Yeni əlaqə nömrəsi daxil edin">' +
@@ -199,7 +237,6 @@
         '</div>';
       $(".email-address-content").append(newInput);
     });
-    // "Sil" düğmesine tıklandığında ilgili input alanını silin
     $(document).on("click", ".remove-email-address", function() {
       $(this).parent(".input-group").remove();
     });
@@ -210,7 +247,6 @@
         '</div>';
       $(".social-address-content").append(newInput);
     });
-    // "Sil" düğmesine tıklandığında ilgili input alanını silin
     $(document).on("click", ".remove-social-address", function() {
       $(this).parent(".input-group").remove();
     });

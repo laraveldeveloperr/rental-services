@@ -1,16 +1,37 @@
 @extends('layouts.app')
+@push('css')
+<style>
+   /* Stil için özel CSS sınıfları ekledik */
+   .faq-card {
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+   }
+
+   .faq-card-header {
+      background-color: #f7f7f7;
+   }
+
+   .faq-question {
+      font-weight: bold;
+   }
+
+   .faq-answer {
+      padding: 15px;
+   }
+</style>
+@endpush
 @section('content')
 <section class="gauto-breadcromb-area section_70">
    <div class="container">
       <div class="row">
          <div class="col-md-12">
             <div class="breadcromb-box">
-               <h3>Car Booking</h3>
+               <h3>{{ __('car_booking') }}</h3>
                <ul>
                   <li><i class="fa fa-home"></i></li>
-                  <li><a href="index.html">Home</a></li>
+                  <li><a href="index.html">{{ __('home') }}</a></li>
                   <li><i class="fa fa-angle-right"></i></li>
-                  <li>car Booking</li>
+                  <li>{{ __('car_booking') }}</li>
                </ul>
             </div>
          </div>
@@ -50,11 +71,30 @@
          </div>
          <div class="col-lg-6">
             <div class="car-booking-right">
-               <p class="rental-tag">rental</p>
+               <a class="rental-tag" href="#rent-form">{{ __('reserve_now') }}</a>
                <h3>{{ $car->brands->name }} {{ $car->models->name }}</h3>
                <div class="price-rating">
                   <div class="price-rent">
-                     <h4>{{ $car->day_price }} AZN<span>/ Day</span></h4>
+                     <h4>
+                        @php
+                        $discountedPrice = null;
+                        if(isset($car->discounts) && $car->discounts->type == 1) {
+                        $discountedPrice = $car->day_price - ($car->day_price * $car->discounts->discount / 100);
+                        }elseif(isset($car->discounts) && $car->discounts->type !=1) {
+                        $discountedPrice = $car->discounts->discount;
+                        }
+                        @endphp
+
+                        @if($discountedPrice && $car->discounts->type == 1)
+                        <del class="text-danger">{{ $car->day_price }} AZN</del><br>
+                        {{ $discountedPrice }} AZN<span>/ Day</span>
+                        @elseif($discountedPrice && $car->discounts->type !=1)
+                        {{ $car->day_price }} AZN<span>/ Day</span>
+                        <small class="text-success">( -{{ $discountedPrice }} AZN) </small>
+                        @else
+                        {{ $car->day_price }} AZN<span>/ Day</span>
+                        @endif
+                     </h4>
                   </div>
                   <div class="car-rating">
                      <ul>
@@ -124,16 +164,69 @@
 </section>
 <section class="gauto-booking-form section_70">
    <div class="container">
-      <div class="row">
+      <div class="row mb-4">
          <div class="col-md-12 mb-4">
             {!! $car->description !!}
          </div>
+         <div class="col-md-12">
+            <div id="accordion">
+               @foreach ($car->faqs as $faq)
+               <div class="card faq-card">
+                  <div class="card-header faq-card-header" id="headingThree">
+                     <h5 class="mb-0">
+                        <button class="btn btn-link collapsed faq-question text-dark" data-toggle="collapse"
+                           data-target="#{{ $faq->id }}" aria-expanded="false" aria-controls="{{ $faq->id }}">
+                           {{ $faq->question }}
+                        </button>
+                     </h5>
+                  </div>
+                  <div id="{{ $faq->id }}" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                     <div class="card-body faq-answer">
+                        {{ $faq->answer }}
+                     </div>
+                  </div>
+               </div>
+               @endforeach
+            </div>
+         </div>
       </div>
-      <div class="row">
+      <div class="row mt-4" id="rent-form">
          <div class="col-lg-8">
             <div class="booking-form-left">
                <div class="single-booking">
                   <h3>{{ __('reservation_informations') }}</h3>
+
+                  <?php
+                        $start_date = DateTime::createFromFormat('d/m/Y', $_GET['start_date']);
+                        $end_date = DateTime::createFromFormat('d/m/Y', $_GET['end_date']);
+                        $discount_type= null;
+                        $discount= 0;
+                        $total_price = 0; 
+                        $discounted_price = 0; 
+
+                        if ($start_date && $end_date) {
+                           $day_diff = $start_date->diff($end_date)->days;
+                           $day_price = $car->day_price;
+                           $total_price = $day_price*$day_diff;
+                           $discounted_price = $total_price;
+                           if($car->discounts)
+                           {
+                              if($car->discounts->type == 1)
+                              {
+                                 $discount = $car->discounts->discount;
+                                 $discount_type=1;
+                                 $discount=$car->discounts->discount;
+                                 $discounted_price = $day_price*$day_diff - ($day_price*$day_diff * $car->discounts->discount/100);
+                              }
+                              else {
+                                 $discount = $car->discounts->discount;
+                                 $discount_type= 0;
+                                 $discount=$car->discounts->discount;
+                                 $discounted_price = $day_price*$day_diff - $car->discounts->discount;
+                              }
+                           }
+                        }
+                     ?>
                   <form method="POST" action="{{ route('reserve') }}">
                      @csrf
                      <div class="row">
@@ -141,16 +234,24 @@
                            <p>
                               <input type="text" hidden id="brands_id" name="brands_id" value="{{ $car->brands_id }}">
                               <input type="text" hidden id="models_id" name="models_id" value="{{ $car->models_id }}">
-                              <input type="text" hidden id="id" name="cars_id" value="{{ $car->id }}">
+                              <input type="text" hidden id="cars_id" name="cars_id" value="{{ $car->id }}">
                               <input type="text" hidden id="price" name="price" value="{{ $car->day_price }}">
+                              <input type="text" hidden id="total_price" name="total_price" value="{{ $total_price }}">
+                              <input type="text" hidden id="discounted_price" name="discounted_price"
+                                 value="{{ $discounted_price }}">
+                              <input type="text" hidden id="discount_type" name="discount_type"
+                                 value="{{ $discount_type }}">
+                              <input type="text" hidden id="discount" name="discount" value="{{ $discount }}">
                               <input id="pick_up" required name="pick_up" placeholder="{{ __('start_date') }}"
-                              data-select="datepicker" type="text">
+                                 data-select="datepicker"
+                                 value="{{ isset($_GET['start_date']) ? $_GET['start_date'] : '' }}" type="text">
                            </p>
                         </div>
                         <div class="col-md-6">
                            <p>
                               <input id="drop_off" required name="drop_off" placeholder="{{ __('end_date') }}"
-                              data-select="datepicker" type="text">
+                                 data-select="datepicker"
+                                 value="{{ isset($_GET['end_date']) ? $_GET['end_date'] : '' }}" type="text">
                            </p>
                         </div>
                         <div class="col-md-6">
@@ -173,7 +274,6 @@
                         <div class="col-md-6">
                            <p>
                               <input type="tel" required name="phone" placeholder="{{ __('phone') }}">
-                              <input type="text" hidden required name="total_price" id="calculated_price_input">
                            </p>
                         </div>
                      </div>
@@ -185,17 +285,25 @@
                         </div>
                      </div>
                      <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                            <p>
-                              <button type="button" class="gauto-theme-btn calculate-button">{{ __('calculate') }}</button>
+                              <a href="https://wa.me/{{ json_decode($general_settings->numbers,true)[0] }}?text=https://rentalservices.az/{{ $car->id }}/car-details">
+                              <button type="button" class="gauto-theme-btn">{{ __('whatsapp') }}</button>
+                              </a>
                            </p>
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
+                           <p>
+                              <button type="button"
+                                 class="gauto-theme-btn calculate-button">{{ __('calculate') }}</button>
+                           </p>
+                        </div>
+                        <div class="col-4">
                            <p>
                               <button type="submit" class="gauto-theme-btn">{{ __('reserve') }}</button>
                            </p>
                         </div>
-                        </div>
+                     </div>
                   </form>
                </div>
             </div>
@@ -206,9 +314,27 @@
                <div class="car-list-left">
                   <div class="sidebar-widget">
                      <span class="calculated_price">
-                        {{ __('price_not_calculated_select_pick_up_and_drop_off_date_for_price') }}
+                        <div id="result-price">
+                           <table class="table table-bordered">
+                              <tr>
+                                 <td class="text-dark">{{ __('day_price') }}</td>
+                                 <td class="text-dark">{{ $day_price }} AZN</td>
+                              </tr>
+                              <tr>
+                                 <td class="text-dark">{{ __('day') }}</td>
+                                 <td class="text-dark">{{ $day_diff }} {{ __('day') }}</td>
+                              </tr>
+                              <tr>
+                                 <td class="text-dark">{{ __('discount') }}</td>
+                                 <td class="text-danger">-{{ $discount }} {{ $discount_type==1 ? '%' : 'AZN' }}</td>
+                              </tr>
+                              <tr>
+                                 <td class="text-dark">{{ __('discounted_price') }}</td>
+                                 <td class="text-dark">{{ $discounted_price }} AZN</td>
+                              </tr>
+                           </table>
+                        </div>
                      </span>
-                     <h3 class="price_calculated text-danger"></h3>
                   </div>
                </div>
             </div>
@@ -221,22 +347,32 @@
 @push('js')
 <script>
    $(document).ready(function() {
-      // Form submit olayını dinle
       $('.calculate-button').on('click', function(event) {
          event.preventDefault();
+         const cars_id = $('#cars_id').val();
+         const brands_id = $('#brands_id').val();
+         const models_id = $('#models_id').val();
          const dayPrice = $('#price').val();
          const pickUpDateStr = $('#pick_up').val();
          const dropOffDateStr = $('#drop_off').val();
          const pickUpDate = convertToDate(pickUpDateStr);
          const dropOffDate = convertToDate(dropOffDateStr);
-         const timeDiff = dropOffDate - pickUpDate;
-         const daysDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-         if (!isNaN(dayPrice) && !isNaN(daysDifference)) {
-            const totalPrice = dayPrice * daysDifference;
-            $('.calculated_price').html('');
-            $('.price_calculated').html(totalPrice + ' AZN');
-            $('#calculated_price_input').val(totalPrice);
-         }
+         $.ajax({
+            url: "{{ route('calculate-price') }}",
+            method: "GET",
+            data: {
+               "cars_id": cars_id,
+               "brands_id": brands_id,
+               "models_id": models_id,
+               "start_date": pickUpDateStr,
+               "end_date": dropOffDateStr,
+               "day_price": dayPrice,
+            },
+            success: function(response) {
+               $('#result-price').html('');
+               $('#result-price').html(response);
+            }
+         })
       });
 
       function convertToDate(dateStr) {

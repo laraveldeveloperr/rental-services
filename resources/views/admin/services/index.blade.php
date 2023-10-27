@@ -4,12 +4,14 @@
   <div class="card-header">
     <h3>{{ __('services') }}
       <div class="float-end">
-        <a class="btn btn-success btn-xs" href="{{ route(ADMIN.'.services.create') }}">
+      @can('create services')
+      <a class="btn btn-success btn-xs" href="{{ route(ADMIN.'.services.create') }}">
           <span>
             <i class="mdi mdi-plus"></i>
           </span>
           {{ __('new') }}
         </a>
+      @endcan  
       </div>
     </h3>
   </div>
@@ -42,6 +44,7 @@
             </td>
             <td>
               <ul class="list-inline">
+                @can('edit services')
                 <li class="list-inline-item">
                   <a class="dropdown-item d-flex align-items-center"
                     href="{{ route(ADMIN.'.services.edit',  $service->id) }}"><svg xmlns="http://www.w3.org/2000/svg"
@@ -50,6 +53,8 @@
                       <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
                     </svg> <span class="">{{ __('edit') }}</span></a>
                 </li>
+                @endcan
+                @can('delete services')
                 <li class="list-inline-item">
                   {!! Form::open([
                   'class'=>'delete',
@@ -66,6 +71,7 @@
                     </svg> <span class="">{{ __('delete') }}</span></button>
                   {!! Form::close() !!}
                 </li>
+                @endcan
               </ul>
             </td>
           </tr>

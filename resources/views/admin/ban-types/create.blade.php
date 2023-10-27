@@ -4,12 +4,14 @@
   <div class="card-header">
     <h3>{{ __('new') }}
       <div class="float-end">
+        @can('ban types')
         <a class="btn btn-danger btn-xs" href="{{ route(ADMIN.'.ban-types.index') }}">
           <span>
             <i class="mdi mdi-arrow-left"></i>
           </span>
           {{ __('ban_type') }}
         </a>
+        @endcan
       </div>
     </h3>
   </div>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\BanTypes;
 use App\Models\Brands;
 use App\Models\Cars;
+use App\Models\CarsCarsFaqs;
+use App\Models\CarsFaqs;
 use App\Models\Colors;
 use App\Models\Engines;
 use App\Models\Fuels;

@@ -57,47 +57,47 @@
     <table>
         <tr>
           <th>Bron nömrəsi:</th>
-          <td>{{ $bron_number }}</td>
+          <td>{{ $bronData['bron_number'] }}</td>
         </tr>
         <tr>
           <th>Marka:</th>
-          <td>{{$brands_id}}</td>
+          <td>{{$bronData['brands_id']}}</td>
         </tr>
         <tr>
           <th>Model:</th>
           <td>
-              {{ $models_id }}
+              {{ $bronData['models_id'] }}
           </td>
         </tr>
         <tr>
           <th>Avtomobil:</th>
           <td>
-              {{ $cars_id }}
+              {{ $bronData['cars_id'] }}
           </td>
         </tr>
         <tr>
           <th>Sifariş tarixi:</th>
-          <td>{{$start_date}}</td>
+          <td>{{$bronData['pick_up']}}</td>
         </tr>
         <tr>
           <th>Bitiş tarixi:</th>
-          <td>{{$end_date}}</td>
+          <td>{{$bronData['drop_off']}}</td>
         </tr>
         <tr>
           <th>Qiymət:</th>
-          <td>{{ $price }}</td>
+          <td>{{ $bronData['price'] }}</td>
         </tr>
         <tr>
           <th>Endirim tipi:</th>
-          <td>{{ $discount_type }}</td>
+          <td>{{ $bronData['discount_type'] }}</td>
         </tr>
         <tr>
           <th>Endirim:</th>
-          <td>{{ $discount }}</td>
+          <td>{{ $bronData['discount'] }}</td>
         </tr>
         <tr>
           <th>Endirimli qiymət:</th>
-          <td>{{ $discounted_price }}</td>
+          <td>{{ $bronData['discounted_price'] }}</td>
         </tr>
         <tr>
           <th class="text-success">Bron statusu:</th>

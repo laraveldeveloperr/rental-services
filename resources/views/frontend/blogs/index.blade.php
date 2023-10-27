@@ -5,12 +5,12 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="breadcromb-box">
-                     <h3>Blog</h3>
+                     <h3>{{ __('blogs') }}</h3>
                      <ul>
                         <li><i class="fa fa-home"></i></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">{{ __('home') }}</a></li>
                         <li><i class="fa fa-angle-right"></i></li>
-                        <li>Blog</li>
+                        <li>{{ __('blogs') }}</li>
                      </ul>
                   </div>
                </div>

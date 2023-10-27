@@ -8,7 +8,7 @@
                      <h3>{{ $service->title }}</h3>
                      <ul>
                         <li><i class="fa fa-home"></i></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">{{ __('home') }}</a></li>
                         <li><i class="fa fa-angle-right"></i></li>
                         <li>{{ $service->title }}</li>
                      </ul>

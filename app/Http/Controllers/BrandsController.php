@@ -30,16 +30,6 @@ class BrandsController extends Controller
      */
     public function create(Request $request)
     {
-        // $lang = $request->get('lang');
-        // $filePath = config_path('app.php');
-        // $newLocale = is_null($lang) ? 'az' : $lang; 
-        // $fileContent = file_get_contents($filePath);
-        // $fileContent = preg_replace(
-        //     "/'locale' => '.*'/",
-        //     "'locale' => '$newLocale'",
-        //     $fileContent
-        // );
-        // file_put_contents($filePath, $fileContent);
         return view('admin.brands.create');
     }
 

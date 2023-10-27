@@ -11,7 +11,7 @@ class PageDesignController extends Controller
     public function index()
     {
         $page = PageDesigns::first();
-        return view('admin.settings.general_settings.page-design',compact('page'));
+        return view('admin.settings.general_settings.page-design', compact('page'));
     }
 
     public function update(Request $request, $id)
@@ -30,6 +30,29 @@ class PageDesignController extends Controller
         $page->members = $request->members == "on" ? 1 : 0;
         $page->offers = $request->offers == "on" ? 1 : 0;
         $page->services = $request->services == "on" ? 1 : 0;
+
+        if ($request->file('home_about_section_image')) {
+            $home_about_section_image = $request->file('home_about_section_image');
+            $home_about_section_image->move(public_path('images'), $home_about_section_image->getClientOriginalName());
+            $home_about_section_image = $home_about_section_image->getClientOriginalName();
+            $page->home_about_section_image = $home_about_section_image;
+        }
+
+        if ($request->file('banner1_image')) {
+            $banner1_image = $request->file('banner1_image');
+            $banner1_image->move(public_path('images'), $banner1_image->getClientOriginalName());
+            $banner1_image = $banner1_image->getClientOriginalName();
+            $page->banner1_image = $banner1_image;
+        }
+
+        if ($request->file('banner2_image')) {
+            $banner2_image = $request->file('banner2_image');
+            $banner2_image->move(public_path('images'), $banner2_image->getClientOriginalName());
+            $banner2_image = $banner2_image->getClientOriginalName();
+            $page->banner2_image = $banner2_image;
+        }
+
+
         $page->save();
 
         toast('Səhifə görünüşü müvəffəqiyyətlə tənzimləndi', 'success');

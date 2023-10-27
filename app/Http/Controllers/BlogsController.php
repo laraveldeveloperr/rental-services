@@ -42,10 +42,9 @@ class BlogsController extends Controller
         $blog->fill($request->data);
         if ($request->file('image')) {
             $blog_image = $request->file('image');
-            if ($blog_image->isValid()) {
-                $imagePath = $blog_image->store('images/blogs', 'public'); // Store the image in the 'public' disk.
-                $blog->image = $imagePath;
-            }
+            $newimageName = $blog_image->getClientOriginalName();
+            $blog_image->move(public_path('images/blogs'), $newimageName);
+            $blog->image = $newimageName;
         }
         $blog->status = $request->status;
         $blog->save();

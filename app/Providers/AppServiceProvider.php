@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Blogs;
+use App\Models\Brands;
 use App\Models\GeneralSettings;
 use App\Models\PageDesigns;
 use Illuminate\Pagination\Paginator;
@@ -39,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
         $general_settings = GeneralSettings::first();
         $page_design = PageDesigns::first();
         $blogs = Blogs::orderBy('id', 'ASC')->get();
-        view()->share(['languages'=>$languages, 'general_settings'=>$general_settings, 'page_design'=>$page_design, 'blogs'=>$blogs]);
+        $brands_ = Brands::where('status',1)->get();
+        view()->share(['languages'=>$languages, 'general_settings'=>$general_settings, 'page_design'=>$page_design, 'blogs'=>$blogs, 'brands_'=>$brands_]);
         
     }
 }

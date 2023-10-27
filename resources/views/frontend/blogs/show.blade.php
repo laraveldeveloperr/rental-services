@@ -37,7 +37,7 @@
                            
                         <strong>{!! $blog->content !!}</strong>
                         </div>
-                        <div class="gauto-comment-list">
+                        <!-- <div class="gauto-comment-list">
                            <div class="comment-group-title">
                               <h2>3 Comments</h2>
                            </div>
@@ -94,8 +94,8 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
-                        <div class="gauto-leave-comment">
+                        </div> -->
+                        <!-- <div class="gauto-leave-comment">
                            <h2>Leave a comment</h2>
                            <p>Your must sing-in to make or comment a post</p>
                            <form>
@@ -104,7 +104,7 @@
                               <textarea class="comment" placeholder="Comment..." name="comment"></textarea>
                               <button type="submit" class="gauto-theme-btn">post comment</button>
                            </form>
-                        </div>
+                        </div> -->
                      </div>
                   </div>
                </div>

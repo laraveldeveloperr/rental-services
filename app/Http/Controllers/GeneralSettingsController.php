@@ -25,7 +25,7 @@ class GeneralSettingsController extends Controller
         
         foreach ($request->data as $key => $item) {
             $encodedMetaKeywords = json_encode($item['meta_keywords']);
-            $item['meta_keywords'] = $encodedMetaKeywords; // Replace the original "meta_keywords" with the encoded value
+            $item['meta_keywords'] = $encodedMetaKeywords;
             $data_updated[$key] = $item;
         }
 

@@ -5,12 +5,12 @@
             <div class="row">
                <div class="col-md-12">
                   <div class="breadcromb-box">
-                     <h3>About Us</h3>
+                     <h3>{{ __('about_us') }}</h3>
                      <ul>
                         <li><i class="fa fa-home"></i></li>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{{ route('home') }}">{{ __('home') }}</a></li>
                         <li><i class="fa fa-angle-right"></i></li>
-                        <li>About Us</li>
+                        <li>{{ __('about_us') }}</li>
                      </ul>
                   </div>
                </div>
@@ -22,14 +22,14 @@
             <div class="row">
                <div class="col-lg-6">
                   <div class="about-page-left">
-                     <h4>About Us</h4>
+                     <h4>{{ __('about_us') }}</h4>
                      <p>{!! $general_settings->about_text !!}</p>
                      <div class="about-page-call">
                         <div class="page-call-icon">
                            <i class="fa fa-phone"></i>
                         </div>
                         <div class="call-info">
-                           <p>Need any Help?</p>
+                           <p>{{ __('need_help?') }}</p>
                            <h4><a href="#">{{ json_decode($general_settings->numbers)[0] }}</a></h4>
                         </div>
                      </div>

@@ -17,6 +17,14 @@ class PermissionSeeder extends Seeder
     public function run()
     {
         $permissions = [
+
+            'users',
+            'create users',
+            'edit users',
+            'show users',
+            'delete users',
+
+
             'brands',
             'create brands',
             'edit brands',
@@ -81,6 +89,7 @@ class PermissionSeeder extends Seeder
             'create cars',
             'edit cars',
             'show cars',
+            'show cars gallery',
             'delete cars',
 
             'brons',
@@ -88,6 +97,13 @@ class PermissionSeeder extends Seeder
             'edit brons',
             'show brons',
             'delete brons',
+            'accept',
+            'reject',
+            'pending',
+
+            'call requests',
+            'answer',
+
 
             'blogs',
             'create blogs',
@@ -126,16 +142,25 @@ class PermissionSeeder extends Seeder
             'delete partners',
 
             'messages',
-            'create messages',
-            'edit messages',
-            'show messages',
-            'delete messages',
+
+            'slide',
+            'create slide',
+            'edit slide',
+            'show slide',
+            'delete slide',
+            
+            'team',
+            'create team',
+            'edit team',
+            'show team',
+            'delete team',
 
             'languages',
             'create languages',
             'edit languages',
             'show languages',
             'delete languages',
+            'edit translations',
 
             'admins',
             'create admins',
@@ -143,11 +168,25 @@ class PermissionSeeder extends Seeder
             'show admins',
             'delete admins',
 
+            'roles',
+            'create roles',
+            'edit roles',
+            'show roles',
+            'delete roles',
+            
+            'services',
+            'create services',
+            'edit services',
+            'show services',
+            'delete services',
+
             'permissions',
             'set permissions',
 
             'general settings',
-            'edit general settings'
+            'edit general settings',
+
+            'main page view'
         ];
 
         foreach ($permissions as $key => $value) {
